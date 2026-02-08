@@ -40,7 +40,7 @@ class DashboardController extends Controller
         $biaya_sewa = $harga_per_jam * $durasi_jam;
         $total_bayar = $biaya_sewa;
 
-        // 3. Simpan Transaksi Utama Dulu (Status Ongoing)
+        // 3. Simpan Transaksi Utama
         $transaction = Transaction::create([
             'console_id' => $console->id,
             'customer_name' => $request->nama_pemain,
@@ -52,14 +52,14 @@ class DashboardController extends Controller
         ]);
 
         // 4. LOGIC FnB (MAKANAN)
-        // Cek apakah ada input 'qty' dari form?
+        // Cek apakah ada input dari form?
         if ($request->has('qty')) {
             foreach ($request->qty as $product_id => $quantity) {
                 // Kalau quantity diisi lebih dari 0 (artinya dia pesen)
                 if ($quantity > 0) {
                     $product = Product::find($product_id);
 
-                    // Cek stok cukup gak?
+                    // Cek stok cukup ga
                     if ($product && $product->stock >= $quantity) {
                         $subtotal = $product->price * $quantity;
                         $total_bayar += $subtotal;
@@ -67,7 +67,7 @@ class DashboardController extends Controller
                         // Kurangi Stok
                         $product->decrement('stock', $quantity);
 
-                        // Simpan ke Tabel Detail (Manual Query biar cepet gak usah bikin Model)
+                        // Simpan ke Tabel Detail
                         DB::table('transaction_details')->insert([
                             'transaction_id' => $transaction->id,
                             'product_id' => $product->id,
@@ -98,17 +98,17 @@ class DashboardController extends Controller
         if (!$transaction) return back();
 
         if ($transaction->status == 'ongoing') {
-            // --- LOGIC PAUSE ---
+            //LOGIC PAUSE
             $transaction->update([
                 'status' => 'paused',
                 'paused_at' => Carbon::now()
             ]);
         } elseif ($transaction->status == 'paused') {
-            // --- LOGIC RESUME ---
+            //LOGIC RESUME
             $waktu_pause = Carbon::parse($transaction->paused_at);
             $sekarang = Carbon::now();
 
-            // Selisih waktu
+            //Selisih waktu
             $selisih_menit = $waktu_pause->diffInMinutes($sekarang);
 
             $new_end_time = Carbon::parse($transaction->end_time)->addMinutes($selisih_menit);
@@ -123,7 +123,7 @@ class DashboardController extends Controller
         return back();
     }
 
-    // FUNGSI RESET / STOP (SELESAI)
+    // FUNGSI RESET / STOP
     public function stopSession($id)
     {
         $console = Console::find($id);
@@ -140,7 +140,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // --- LOGIC AUTO RESET ---
+        //LOGIC AUTO RESET
         $expired_transactions = Transaction::where('status', 'ongoing')
             ->where('end_time', '<=', Carbon::now())
             ->get();
@@ -153,7 +153,7 @@ class DashboardController extends Controller
             }
         }
 
-        // Query data kayak biasa
+        // Query data
         $ps3_units = Console::where('type', 'PS3')->get();
         $ps4_units = Console::where('type', 'PS4')->get();
         $ps5_units = Console::where('type', 'PS5')->get();
@@ -202,7 +202,7 @@ class DashboardController extends Controller
         // 1. Cari Unit & Transaksi yang lagi jalan
         $console = Console::find($request->console_id);
 
-        // Validasi: Pastikan unit ada dan punya transaksi
+        // Pastikan unit ada dan punya transaksi
         if (!$console || !$console->activeTransaction) {
             return back()->with('error', 'Unit tidak valid atau tidak ada transaksi aktif!');
         }

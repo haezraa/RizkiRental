@@ -213,7 +213,7 @@
     </div>
 
     <script>
-        // --- 1. SETUP LOGIC MODAL BOOKING ---
+        // 1. SETUP LOGIC MODAL BOOKING
         function openModal(name, type, id) {
             const modal = document.getElementById('bookingModal');
             modal.classList.remove('hidden');
@@ -240,7 +240,7 @@
             document.getElementById('bookingModal').classList.add('hidden');
         }
 
-        // --- 2. LOGIC MEMBER OTOMATIS ISI NAMA ---
+        // 2. LOGIC MEMBER OTOMATIS ISI NAMA
         function checkMember() {
             const memberSelect = document.getElementById('inputMember');
             const namaInput = document.getElementById('inputNamaPemain');
@@ -280,7 +280,7 @@
             let duration = parseInt(document.getElementById('inputDurasi').value) || 0;
             let rentalTotal = pricePerHour * duration;
 
-            // Hitung FnB
+            // Hitung menu fnb
             let fnbTotal = 0;
             let fnbInputs = document.querySelectorAll('.fnb-qty');
             fnbInputs.forEach(input => {

@@ -161,7 +161,6 @@
         renderCart();
     }
 
-    // 3. 
     function renderCart() {
         const container = document.getElementById('cartContainer');
         const totalEl = document.getElementById('cartTotal');
