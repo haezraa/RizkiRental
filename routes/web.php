@@ -8,9 +8,16 @@ use App\Http\Controllers\FnbController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\MemberController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
     Route::get('/dashboard', function () {
         return redirect()->route('rental');
@@ -18,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/rental', [DashboardController::class, 'index'])->name('rental');
 
-    // cconsole
+    // console
     Route::post('/consoles/store', [DashboardController::class, 'store'])->name('consoles.store');
     Route::delete('/consoles/{id}', [DashboardController::class, 'destroy'])->name('consoles.destroy');
 
@@ -31,20 +38,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // fnb
     Route::get('/fnb', [FnbController::class, 'index'])->name('fnb.index');
     Route::post('/fnb', [FnbController::class, 'store'])->name('fnb.store');
-
-    // fnb post
     Route::post('/fnb/update/{id}', [FnbController::class, 'update'])->name('fnb.update_post');
     Route::patch('/fnb/{id}/stock', [FnbController::class, 'updateStock'])->name('fnb.quick_stock');
     Route::delete('/fnb/{id}', [FnbController::class, 'destroy'])->name('fnb.destroy');
     Route::get('/fnb/order', [FnbController::class, 'cashier'])->name('fnb.cashier');
 
-    // laporan
+    // laporan & member
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::resource('members', MemberController::class);
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';
