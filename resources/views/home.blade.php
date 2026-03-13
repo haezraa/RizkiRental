@@ -4,6 +4,15 @@
 
 @section('konten')
 
+    @if(auth()->check() && auth()->user()->role === 'admin')
+        <div class="flex justify-end mb-4 relative z-20">
+            <select onchange="window.location.href=this.value" class="bg-white text-[#2251a5] border-2 border-[#2251a5] font-bold rounded-lg py-2 px-4 focus:ring-2 focus:ring-[#2251a5] focus:outline-none cursor-pointer shadow-sm transition hover:bg-blue-50">
+                <option value="{{ route('home') }}" selected>Tampilan Manajemen</option>
+                <option value="{{ route('front') }}">Tampilan User Biasa</option>
+            </select>
+        </div>
+    @endif
+
     <div class="bg-[#2251a5] rounded-2xl p-6 text-white shadow-lg mb-8 flex justify-between items-center relative overflow-hidden">
         <div class="relative z-10">
             <h2 class="text-3xl font-black mb-1">Halo, Admin!</h2>
@@ -13,14 +22,13 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-500 font-bold uppercase">Pemasukan Hari Ini</p>
-                <h3 class="text-2xl font-black text-gray-800">Rp {{ number_format($pemasukan_hari_ini, 0, ',', '.') }}</h3>
+                <h3 class="text-2xl font-black text-gray-800">Rp {{ number_format($pemasukan_hari_ini ?? 0, 0, ',', '.') }}</h3>
             </div>
         </div>
 
@@ -30,7 +38,7 @@
             </div>
             <div>
                 <p class="text-xs text-gray-500 font-bold uppercase">Unit Sedang Main</p>
-                <h3 class="text-2xl font-black text-gray-800">{{ $unit_sedang_main }} <span class="text-sm font-medium text-gray-400">Unit</span></h3>
+                <h3 class="text-2xl font-black text-gray-800">{{ $unit_sedang_main ?? 0 }} <span class="text-sm font-medium text-gray-400">Unit</span></h3>
             </div>
         </div>
 
@@ -40,7 +48,7 @@
             </div>
             <div>
                 <p class="text-xs text-gray-500 font-bold uppercase">Total Pelanggan</p>
-                <h3 class="text-2xl font-black text-gray-800">{{ $total_transaksi }} <span class="text-sm font-medium text-gray-400">Orang</span></h3>
+                <h3 class="text-2xl font-black text-gray-800">{{ $total_transaksi ?? 0 }} <span class="text-sm font-medium text-gray-400">Orang</span></h3>
             </div>
         </div>
     </div>
@@ -61,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-sm">
-                    @forelse($riwayat_terbaru as $history)
+                    @forelse($riwayat_terbaru ?? [] as $history)
                         <tr class="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition">
                             <td class="py-3 text-gray-500">{{ $history->created_at->format('H:i') }}</td>
                             <td class="py-3 font-bold text-gray-800">{{ $history->customer_name }}</td>
