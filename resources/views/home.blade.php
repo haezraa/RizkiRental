@@ -4,15 +4,6 @@
 
 @section('konten')
 
-    @if(auth()->check() && auth()->user()->role === 'admin')
-        <div class="flex justify-end mb-4 relative z-20">
-            <select onchange="window.location.href=this.value" class="bg-white text-[#2251a5] border-2 border-[#2251a5] font-bold rounded-lg py-2 px-4 focus:ring-2 focus:ring-[#2251a5] focus:outline-none cursor-pointer shadow-sm transition hover:bg-blue-50">
-                <option value="{{ route('home') }}" selected>Tampilan Manajemen</option>
-                <option value="{{ route('front') }}">Tampilan User Biasa</option>
-            </select>
-        </div>
-    @endif
-
     <div class="bg-[#2251a5] rounded-2xl p-6 text-white shadow-lg mb-8 flex justify-between items-center relative overflow-hidden">
         <div class="relative z-10">
             <h2 class="text-3xl font-black mb-1">Halo, Admin!</h2>

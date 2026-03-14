@@ -14,8 +14,8 @@
 
     <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm sticky top-0 z-50 transition-all duration-300">
         <div class="max-w-[1200px] mx-auto flex items-center justify-between px-6 py-4">
-            <a class="flex items-center gap-2 group" href="#">
-                <div class="bg-[#2251a5] text-white p-2 rounded-lg font-black group-hover:rotate-12 transition-transform">RR</div>
+            <a class="flex items-center gap-3 group" href="#">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Rizki Rental" class="h-10 w-10 transition-transform duration-300 group-hover:scale-110 drop-shadow-sm">
                 <span class="text-xl font-black text-[#2251a5] tracking-tight">RIZKI RENTAL</span>
             </a>
 
@@ -28,8 +28,8 @@
                 @if(auth()->check() && auth()->user()->role === 'admin')
                     <div class="pl-6 border-l border-slate-200">
                         <select onchange="window.location.href=this.value" class="bg-blue-50 text-[#2251a5] border border-blue-200 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#2251a5] cursor-pointer text-xs font-bold hover:bg-blue-100 transition-colors">
-                            <option value="{{ route('front') }}" selected>🌐 Mode User</option>
-                            <option value="{{ route('home') }}">🖥️ Manajemen</option>
+                            <option value="{{ route('front') }}" selected> User</option>
+                            <option value="{{ route('home') }}"> Manajemen</option>
                         </select>
                     </div>
                 @endif
@@ -37,26 +37,26 @@
         </div>
     </nav>
 
-    <section class="relative bg-gradient-to-br from-[#1a3d7c] to-[#2251a5] overflow-hidden">
-        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white opacity-10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-72 h-72 bg-blue-400 opacity-20 rounded-full blur-2xl"></div>
+    <section class="relative bg-cover bg-center overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=2057&auto=format&fit=crop');">
+
+        <div class="absolute inset-0 bg-gradient-to-br from-[#1a3d7c]/90 to-[#2251a5]/80"></div>
 
         <div class="relative max-w-[1200px] mx-auto px-6 py-24 md:py-32 flex flex-col items-center text-center z-10">
-            <span class="bg-blue-500/30 border border-blue-400/50 text-blue-100 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-6 uppercase">
+            <span class="bg-white/20 border border-white/30 backdrop-blur-sm text-blue-50 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-6 uppercase">
                 Tempat Mabar Ter-Asik se-Tangerang
             </span>
-            <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl drop-shadow-lg">
                 Tingkatkan Pengalaman <br> <span class="text-blue-300">Gaming Kamu</span> Disini.
             </h1>
-            <p class="text-blue-100/80 text-lg md:text-xl max-w-2xl font-medium mb-10">
+            <p class="text-blue-50/90 text-lg md:text-xl max-w-2xl font-medium mb-10 drop-shadow">
                 Pantau ketersediaan unit secara real-time dari HP kamu. Gak perlu takut kehabisan tempat lagi!
             </p>
-            <a href="#status" class="bg-white text-[#2251a5] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:bg-blue-50 hover:-translate-y-1 transition-all duration-300">
+            <a href="#status" class="bg-white text-[#2251a5] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:bg-blue-50 hover:-translate-y-1 transition-all duration-300">
                 Cek Ketersediaan Unit Sekarang
             </a>
         </div>
 
-        <svg class="absolute bottom-0 w-full text-slate-50 translate-y-1" viewBox="0 0 1440 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <svg class="absolute bottom-0 w-full text-slate-50 translate-y-1 z-10" viewBox="0 0 1440 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,50 C320,150 420,-50 1440,50 L1440,100 L0,100 Z"></path>
         </svg>
     </section>
@@ -173,7 +173,7 @@
         </div>
     </section>
 
-    <section id="fasilitas" class="py-20 bg-slate-50 px-6 border-y border-slate-200">
+    <section id="fasilitas" class="py-20 bg-slate-50 px-6 border-t border-slate-200">
         <div class="max-w-[1200px] mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-black text-slate-800">Fasilitas <span class="text-[#2251a5]">Kenyamanan</span></h2>
@@ -204,17 +204,45 @@
         </div>
     </section>
 
-    <section id="lokasi" class="py-20 bg-white px-6">
+    <section class="py-20 bg-white px-6 border-t border-slate-200">
+        <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop" alt="Suasana Mabar" class="rounded-3xl shadow-lg border border-slate-100 hover:scale-[1.02] transition-transform duration-300">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-4">Kenapa Pilih <span class="text-[#2251a5]">Rizki?</span></h2>
+                <p class="text-slate-500 mb-8 leading-relaxed">
+                    Kami menyediakan pengalaman konsol terbaik dengan fasilitas premium
+                </p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-black flex-shrink-0">✓</div>
+                        <span class="text-slate-700 font-bold">Bisa Booking / Reservasi via WhatsApp</span>
+                    </li>
+                    <li class="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-black flex-shrink-0">✓</div>
+                        <span class="text-slate-700 font-bold">Boleh bawa makanan / cemilan dari luar</span>
+                    </li>
+                    <li class="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-black flex-shrink-0">✓</div>
+                        <span class="text-slate-700 font-bold">Update game terbaru setiap bulan</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="lokasi" class="py-20 bg-slate-50 px-6 border-t border-slate-200">
         <div class="max-w-[1200px] mx-auto">
-            <div class="flex flex-col md:flex-row gap-12 items-center bg-slate-50 rounded-3xl p-6 md:p-12 border border-slate-100 shadow-sm">
+            <div class="flex flex-col md:flex-row gap-12 items-center bg-white rounded-3xl p-6 md:p-12 border border-slate-100 shadow-sm">
                 <div class="w-full md:w-1/2">
                     <h2 class="text-3xl font-black text-slate-800 mb-4">Temukan <span class="text-[#2251a5]">Markas Kami</span></h2>
                     <p class="text-slate-500 mb-8 leading-relaxed font-medium">
                         Lokasi sangat strategis, gampang dicari, parkiran motor luas dan aman diawasi CCTV. Ayo kumpulin squad kamu sekarang!
                     </p>
 
-                    <div class="flex items-start gap-4 mb-8 bg-white p-4 rounded-2xl border border-slate-200">
-                        <div class="w-10 h-10 bg-blue-50 text-[#2251a5] rounded-full flex items-center justify-center flex-shrink-0 font-bold">📍</div>
+                    <div class="flex items-start gap-4 mb-8 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 bg-blue-100 text-[#2251a5] rounded-full flex items-center justify-center flex-shrink-0 font-bold">📍</div>
                         <div>
                             <strong class="text-slate-800 block mb-1">Alamat Lengkap:</strong>
                             <span class="text-slate-500 text-sm">Jl. RPL Sukses No. 1, Kecamatan Cibodas, Kota Tangerang, Banten 15138</span>
@@ -226,7 +254,7 @@
                     </a>
                 </div>
 
-                <div class="w-full md:w-1/2 h-72 md:h-96 bg-white p-2 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="w-full md:w-1/2 h-72 md:h-96 bg-slate-50 p-2 rounded-3xl border border-slate-200 shadow-inner relative overflow-hidden">
                     <iframe class="rounded-2xl w-full h-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.24036681022!2d106.55406085!3d-6.229728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f8e853d2e38d%3A0x301576d14feb9c0!2sTangerang%2C%20Tangerang%20City%2C%20Banten!5e0!3m2!1sen!2sid!4v1710345678901!5m2!1sen!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
@@ -235,9 +263,12 @@
 
     <footer class="bg-[#1a2b4c] text-slate-300 py-12">
         <div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <h3 class="text-2xl font-black text-white mb-2 tracking-tight">RIZKI RENTAL</h3>
-                <p class="text-sm text-slate-400">Sistem Informasi Manajemen Rental PlayStation</p>
+            <div class="flex items-center gap-3">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Footer" class="h-8 w-8 grayscale opacity-70">
+                <div>
+                    <h3 class="text-xl font-black text-white mb-1 tracking-tight">RIZKI RENTAL</h3>
+                    <p class="text-xs text-slate-400">Sistem Informasi Manajemen Rental PlayStation</p>
+                </div>
             </div>
             <div class="text-center md:text-right text-sm text-slate-400">
                 <p>Dibuat untuk Tugas Akhir Jurusan RPL © 2026</p>

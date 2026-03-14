@@ -130,7 +130,15 @@
                 <h2 class="text-2xl font-black text-brand-dark">
                     @yield('judul_halaman')
                 </h2>
-                <div>
+
+                <div class="flex items-center gap-4">
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                        <select onchange="window.location.href=this.value" class="bg-blue-50 text-brand-blue border border-blue-200 rounded-lg py-2 px-4 focus:ring-2 focus:ring-brand-blue focus:outline-none cursor-pointer shadow-sm transition hover:bg-blue-100 font-bold text-sm">
+                            <option value="{{ route('home') }}" selected>🖥️ Tampilan Manajemen</option>
+                            <option value="{{ route('front') }}">🌐 Tampilan User</option>
+                        </select>
+                    @endif
+
                     @yield('header_actions')
                 </div>
             </header>
