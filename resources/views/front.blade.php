@@ -19,19 +19,32 @@
                 <span class="text-xl font-black text-[#2251a5] tracking-tight">RIZKI RENTAL</span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+           <div class="hidden md:flex items-center space-x-6 font-semibold text-sm">
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#status">Status Unit</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#harga">Pricelist</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#fasilitas">Fasilitas</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#lokasi">Lokasi</a>
 
-                @if(auth()->check() && auth()->user()->role === 'admin')
-                    <div class="pl-6 border-l border-slate-200">
-                        <select onchange="window.location.href=this.value" class="bg-blue-50 text-[#2251a5] border border-blue-200 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#2251a5] cursor-pointer text-xs font-bold hover:bg-blue-100 transition-colors">
-                            <option value="{{ route('front') }}" selected> User</option>
-                            <option value="{{ route('home') }}"> Manajemen</option>
+                <div class="h-6 w-px bg-slate-200 mx-2"></div>
+
+                @if(auth()->check())
+                    @if(auth()->user()->role === 'admin')
+                        <select onchange="window.location.href=this.value" class="bg-blue-50 text-[#2251a5] border border-blue-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#2251a5] cursor-pointer text-xs font-bold hover:bg-blue-100 transition-colors">
+                            <option value="{{ route('front') }}" selected>Mode User</option>
+                            <option value="{{ route('home') }}">Manajemen</option>
                         </select>
-                    </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('logout') }}" class="m-0">
+                        @csrf
+                        <button type="submit" class="text-red-500 hover:text-white border border-red-500 hover:bg-red-500 px-4 py-2 rounded-lg font-bold transition-all duration-300">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="bg-[#2251a5] text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                        Login
+                    </a>
                 @endif
             </div>
         </div>

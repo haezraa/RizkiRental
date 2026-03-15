@@ -9,9 +9,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\FrontController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [FrontController::class, 'index'])->name('front');
+Route::get('/', [FrontController::class, 'index'])->name('front');
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -26,7 +26,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     })->name('dashboard');
 
     Route::get('/rental', [DashboardController::class, 'index'])->name('rental');
-
     Route::post('/consoles/store', [DashboardController::class, 'store'])->name('consoles.store');
     Route::delete('/consoles/{id}', [DashboardController::class, 'destroy'])->name('consoles.destroy');
 
