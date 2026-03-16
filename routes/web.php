@@ -10,6 +10,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\FrontController;
 
 Route::get('/', [FrontController::class, 'index'])->name('front');
+Route::post('/booking/tv', [FrontController::class, 'bookingTv'])->name('front.booking');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

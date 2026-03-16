@@ -17,16 +17,19 @@ class MemberController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required|unique:members,phone'
+            'username_billing' => 'required|unique:members,username_billing|alpha_dash',
+            'saldo_menit' => 'required|numeric|min:0',
+            'console_type' => 'required',
+            'phone' => 'nullable'
         ]);
 
         Member::create($request->all());
-        return back()->with('success', 'Member berhasil didaftarkan!');
+        return back()->with('success', 'Akun Billing berhasil didaftarkan!');
     }
 
     public function destroy($id)
     {
         Member::find($id)->delete();
-        return back()->with('success', 'Member dihapus!');
+        return back()->with('success', 'Akun Billing dihapus!');
     }
 }

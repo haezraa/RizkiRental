@@ -15,9 +15,9 @@ class ReportController extends Controller
         $endDate = $request->end_date ? Carbon::parse($request->end_date) : Carbon::today();
 
         // 2. Ambil Data Transaksi Berdasarkan Range Tanggal & Status Selesai
-        $transactions = Transaction::with(['console', 'details.product']) // Eager load biar ringan
+        $transactions = Transaction::with(['console', 'details.product'])
                                    ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
-                                   ->where('status', 'finished') // Cuma ambil yang udah bayar
+                                   ->where('status', 'finished')
                                    ->latest()
                                    ->get();
 
@@ -25,7 +25,6 @@ class ReportController extends Controller
         $total_income = $transactions->sum('total_price');
         $total_transaksi = $transactions->count();
 
-        // Kirim $startDate dan $endDate ke View biar gak error "Undefined variable"
         return view('reports.index', compact('transactions', 'total_income', 'total_transaksi', 'startDate', 'endDate'));
     }
 }
