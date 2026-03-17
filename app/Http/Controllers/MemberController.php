@@ -32,4 +32,18 @@ class MemberController extends Controller
         Member::find($id)->delete();
         return back()->with('success', 'Akun Billing dihapus!');
     }
+
+    public function topup(Request $request, $id)
+    {
+        $request->validate([
+            'tambah_menit' => 'required|numeric|min:1'
+        ]);
+
+        $member = Member::findOrFail($id);
+
+        $member->saldo_menit += $request->tambah_menit;
+        $member->save();
+
+        return back()->with('success', '✅ Berhasil Top Up ' . $request->tambah_menit . ' menit untuk akun ' . $member->username_billing);
+    }
 }

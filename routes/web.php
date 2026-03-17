@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::resource('members', MemberController::class);
+    Route::post('/members/{id}/topup', [MemberController::class, 'topup'])->name('members.topup');
 });
 
 require __DIR__ . '/auth.php';

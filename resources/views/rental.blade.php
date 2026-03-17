@@ -47,7 +47,6 @@
         </div>
     </div>
 
-
     <div id="bookingModal"
         class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4 transition-opacity duration-300">
 
@@ -66,17 +65,6 @@
                     @csrf
                     <input type="hidden" name="console_id" id="modalConsoleId">
                     <input type="hidden" id="modalConsoleType">
-
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Member (Opsional)</label>
-                        <select name="member_id" id="inputMember" onchange="checkMember()"
-                            class="w-full bg-blue-50 border border-blue-200 text-blue-800 font-bold rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="">Bukan Member (Harga Normal)</option>
-                            @foreach ($members as $member)
-                                <option value="{{ $member->id }}" data-name="{{ $member->name }}">{{ $member->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     <div class="mb-4">
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nama Player</label>
@@ -227,12 +215,11 @@
             document.getElementById('bookingForm').reset();
             document.getElementById('qrisArea').classList.add('hidden'); // Sembunyiin QRIS
 
-            // Reset Member & Nama
-            document.getElementById('inputMember').value = "";
+            // Reset Nama
             document.getElementById('inputNamaPemain').readOnly = false;
             document.getElementById('inputNamaPemain').value = "";
 
-            // Trigger hitung total awal (1 jam, no member)
+            // Trigger hitung total awal (1 jam)
             calculateTotal();
         }
 
@@ -240,40 +227,17 @@
             document.getElementById('bookingModal').classList.add('hidden');
         }
 
-        // 2. LOGIC MEMBER OTOMATIS ISI NAMA
-        function checkMember() {
-            const memberSelect = document.getElementById('inputMember');
-            const namaInput = document.getElementById('inputNamaPemain');
-
-            // Ambil nama dari option yang dipilih (data-name)
-            if (memberSelect.value) {
-                const selectedOption = memberSelect.options[memberSelect.selectedIndex];
-                const memberName = selectedOption.getAttribute('data-name');
-
-                // Isi otomatis & Kunci
-                namaInput.value = memberName;
-            } else {
-                // Balik ke manual
-                namaInput.value = '';
-            }
-
-            // Hitung ulang harga (karena diskon berubah)
-            calculateTotal();
-        }
-
+        // 2. LOGIC MENGHITUNG TOTAL HARGA
         function calculateTotal() {
             let type = document.getElementById('modalConsoleType').value;
-            let memberSelect = document.getElementById('inputMember');
-            let isMember = memberSelect.value !== ""; // Cek ada member dipilih ga
-
             let pricePerHour = 0;
 
             if (type === 'PS3') {
-                pricePerHour = isMember ? 4000 : 5000;
+                pricePerHour = 5000;
             } else if (type === 'PS4') {
-                pricePerHour = isMember ? 6000 : 7000;
+                pricePerHour = 7000;
             } else if (type === 'PS5') {
-                pricePerHour = isMember ? 10000 : 12000;
+                pricePerHour = 12000;
             }
 
             // Hitung Rental
@@ -347,4 +311,3 @@
     </script>
 
 @endsection
-

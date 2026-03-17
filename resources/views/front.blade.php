@@ -97,18 +97,32 @@
                             @foreach($typeConsoles as $console)
                                 @if($console->status == 'ready')
                                     <div onclick="bukaModalBooking('{{ $console->id }}', '{{ $console->name }}')" class="rounded-2xl border-2 border-blue-100 bg-white p-4 text-center hover:border-blue-400 hover:shadow-md transition-all cursor-pointer">
-    <div class="text-sm font-bold text-slate-700 mb-2">{{ $console->name }}</div>
-    <div class="flex items-center justify-center gap-1.5 bg-blue-50 py-1 rounded-md">
-        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
-        <span class="text-[10px] text-blue-700 font-black tracking-wider uppercase">Ready</span>
-    </div>
-</div>
+                                        <div class="text-sm font-bold text-slate-700 mb-2">{{ $console->name }}</div>
+                                        <div class="flex items-center justify-center gap-1.5 bg-blue-50 py-1 rounded-md">
+                                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                            <span class="text-[10px] text-blue-700 font-black tracking-wider uppercase">Ready</span>
+                                        </div>
+                                    </div>
                                 @else
-                                    <div class="rounded-2xl border-2 border-slate-100 bg-slate-50 p-4 text-center opacity-70">
-                                        <div class="text-sm font-bold text-slate-500 mb-2">{{ $console->name }}</div>
-                                        <div class="flex items-center justify-center gap-1.5 bg-red-50 py-1 rounded-md">
-                                            <div class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></div>
-                                            <span class="text-[10px] text-red-600 font-black tracking-wider uppercase">Dipakai</span>
+                                    <div class="rounded-2xl border-2 border-red-100 bg-red-50 p-4 text-center opacity-90 relative overflow-hidden">
+                                        <div class="text-sm font-bold text-slate-700 mb-1">{{ $console->name }}</div>
+
+                                        @php
+                                            $activeTx = $console->activeTransaction;
+                                        @endphp
+
+                                        @if($activeTx && $activeTx->end_time)
+                                            <div class="text-lg font-black text-red-600 mb-1 tracking-widest countdown-timer"
+                                                 data-endtime="{{ \Carbon\Carbon::parse($activeTx->end_time)->toIso8601String() }}">
+                                                --:--:--
+                                            </div>
+                                        @else
+                                            <div class="text-xs font-bold text-slate-400 mb-2">Sedang Main</div>
+                                        @endif
+
+                                        <div class="flex items-center justify-center gap-1.5 bg-red-100 py-1 rounded-md mt-1">
+                                            <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                                            <span class="text-[10px] text-red-700 font-black tracking-wider uppercase">Dipakai</span>
                                         </div>
                                     </div>
                                 @endif
@@ -378,5 +392,43 @@
             }, 4000);
         </script>
     @endif
+
+    <script>
+        function jalankanTimer() {
+            const timers = document.querySelectorAll('.countdown-timer');
+            const sekarang = new Date().getTime();
+
+            timers.forEach(timer => {
+                const waktuSelesai = new Date(timer.getAttribute('data-endtime')).getTime();
+                const selisih = waktuSelesai - sekarang;
+
+                if (selisih < 0) {
+                    timer.innerHTML = "WAKTU HABIS";
+                    timer.classList.remove('text-red-600');
+                    timer.classList.add('text-yellow-500', 'animate-bounce');
+
+                    if (!timer.hasAttribute('data-refreshed')) {
+                        timer.setAttribute('data-refreshed', 'true');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 5000);
+                    }
+                } else {
+                    const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+                    const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+
+                    const formatJam = jam < 10 ? "0" + jam : jam;
+                    const formatMenit = menit < 10 ? "0" + menit : menit;
+                    const formatDetik = detik < 10 ? "0" + detik : detik;
+
+                    timer.innerHTML = formatJam + ":" + formatMenit + ":" + formatDetik;
+                }
+            });
+        }
+
+        setInterval(jalankanTimer, 1000);
+        jalankanTimer();
+    </script>
 </body>
 </html>

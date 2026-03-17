@@ -82,15 +82,23 @@
                             </td>
 
                             <td class="px-6 py-4 text-right">
-                                <form id="deleteMember-{{ $member->id }}" action="{{ route('members.destroy', $member->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
+                                <div class="flex items-center justify-end gap-2">
                                     <button type="button"
-                                        onclick="openConfirm('Yakin ingin menghapus akun {{ $member->username_billing }}?', 'deleteMember-{{ $member->id }}')"
-                                        class="text-red-500 hover:text-red-700 font-bold text-xs bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition">
-                                        Hapus
-                                    </button>
-                                </form>
+    onclick="openTopupModal('{{ $member->id }}', '{{ $member->name }}', '{{ $member->username_billing }}')"
+    class="text-blue-600 hover:text-blue-800 font-bold text-xs bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition border border-blue-200">
+    Top Up
+</button>
+
+                                    <form id="deleteMember-{{ $member->id }}" action="{{ route('members.destroy', $member->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button"
+                                            onclick="openConfirm('Yakin ingin menghapus akun {{ $member->username_billing }}?', 'deleteMember-{{ $member->id }}')"
+                                            class="text-red-500 hover:text-red-700 font-bold text-xs bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -100,4 +108,56 @@
             </table>
         </div>
     </div>
+    <div id="modalTopup" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[99] backdrop-blur-sm p-4 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 flex flex-col max-h-[85vh] overflow-hidden transform transition-all scale-100">
+
+            <div class="bg-[#2251a5] px-6 py-4 flex justify-between items-center flex-shrink-0 z-20 shadow-md">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <span id="modalTitle">Top Up Waktu</span>
+                </h3>
+                <button type="button" onclick="closeTopupModal()" class="text-white/70 hover:text-white text-2xl leading-none transition">&times;</button>
+            </div>
+
+            <div class="overflow-y-auto scrollbar-hide flex-1 bg-white relative">
+                <form id="formTopup" method="POST" class="p-6 text-gray-800">
+                    @csrf
+
+                    <div class="mb-6 text-center bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm">
+                        <p class="text-xs text-blue-500 font-bold uppercase mb-1">Target Akun Top Up</p>
+                        <p class="text-xl font-black text-[#2251a5] leading-none mb-1.5" id="topupMemberName">-</p>
+                        <p class="text-sm font-mono text-blue-600 font-bold inline-block bg-white px-3 py-1 rounded-md border border-blue-200" id="topupMemberUsername">-</p>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Tambah Saldo Waktu (Menit)</label>
+                        <input type="number" name="tambah_menit" class="w-full bg-gray-50 border border-gray-300 text-[#2251a5] font-black rounded-lg p-3 focus:ring-2 focus:ring-[#2251a5] focus:outline-none text-center text-2xl transition" required placeholder="0">
+                        <p class="text-xs font-bold text-gray-400 mt-2 text-center">💡 1 Jam = 60 Menit (Ketik dalam format menit)</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-[#2251a5] hover:bg-blue-800 text-white py-3.5 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            TOP UP
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTopupModal(id, name, username) {
+            const modal = document.getElementById('modalTopup');
+
+            document.getElementById('topupMemberName').innerText = name;
+            document.getElementById('topupMemberUsername').innerText = username;
+
+            document.getElementById('formTopup').action = '/members/' + id + '/topup';
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeTopupModal() {
+            document.getElementById('modalTopup').classList.add('hidden');
+        }
+    </script>
 @endsection
