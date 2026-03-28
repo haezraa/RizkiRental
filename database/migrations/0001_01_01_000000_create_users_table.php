@@ -18,6 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
+
+            $table->integer('saldo_ps3')->default(0); 
+            $table->integer('saldo_ps4')->default(0);
+            $table->integer('saldo_ps5')->default(0);
+
             $table->rememberToken();
             $table->timestamps();
         });

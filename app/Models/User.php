@@ -21,6 +21,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'saldo_ps3',
+        'saldo_ps4',
+        'saldo_ps5',
     ];
 
     /**

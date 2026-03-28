@@ -35,10 +35,14 @@
                         </select>
                     @endif
 
+                    <a href="{{ route('user.topup') }}" class="bg-blue-100 text-[#2251a5] px-4 py-2 rounded-lg font-bold hover:bg-blue-200 transition-colors">
+                        Top Up Saldo
+                    </a>
+
                     <form method="POST" action="{{ route('logout') }}" class="m-0">
                         @csrf
                         <button type="submit" class="text-red-500 hover:text-white border border-red-500 hover:bg-red-500 px-4 py-2 rounded-lg font-bold transition-all duration-300">
-                            Logout
+                        Logout
                         </button>
                     </form>
                 @else

@@ -6,18 +6,27 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FnbController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\UserTopupController; 
 
+// 1. RUTE BEBAS HAMBATAN (Tanpa Login)
 Route::get('/', [FrontController::class, 'index'])->name('front');
 Route::post('/booking/tv', [FrontController::class, 'bookingTv'])->name('front.booking');
 
+// 2. RUTE WAJIB LOGIN (Bisa diakses User biasa & Admin)
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    // --- RUTE TOP UP SALDO USER ---
+    Route::get('/topup', [UserTopupController::class, 'index'])->name('user.topup');
+    Route::post('/topup', [UserTopupController::class, 'store'])->name('user.topup.store');
+
+    // Rute Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// 3. RUTE KHUSUS ADMIN (Wajib Login & Wajib Admin)
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -43,8 +52,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/fnb/order', [FnbController::class, 'cashier'])->name('fnb.cashier');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::resource('members', MemberController::class);
-    Route::post('/members/{id}/topup', [MemberController::class, 'topup'])->name('members.topup');
+
 });
 
 require __DIR__ . '/auth.php';
