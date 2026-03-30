@@ -101,10 +101,10 @@
                     <span>Stok Gudang</span>
                 </a>
 
-                <a href="{{ route('members.index') }}" class="flex items-center px-4 py-3 rounded-lg transition-all {{ Request::routeIs('members*') ? 'bg-white text-brand-blue shadow-lg font-bold' : 'text-blue-100 hover:bg-white/10 hover:text-white' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0c0 .854.546 1.597 1.332 1.882M15 20l-3-3m0 0l-3 3m3-3V10"></path></svg>
-                    <span>Data Member</span>
-                </a>
+                <a href="{{ route('admin.users') }}" class="flex items-center px-4 py-3 rounded-lg transition-all {{ Request::routeIs('admin.users*') ? 'bg-white text-brand-blue shadow-lg font-bold' : 'text-blue-100 hover:bg-white/10 hover:text-white' }}">
+    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    <span>Data Player & Saldo</span>
+</a>
 
                 <a href="{{ route('reports.index') }}" class="flex items-center px-4 py-3 rounded-lg transition-all {{ Request::is('reports*') ? 'bg-white text-brand-blue shadow-lg font-bold' : 'text-blue-100 hover:bg-white/10 hover:text-white' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>

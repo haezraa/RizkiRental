@@ -9,11 +9,10 @@ class UserTopupController extends Controller
 {
     public function index()
     {
-        $user = Auth::user(); // Ambil data user yang lagi login
+        $user = Auth::user();
         return view('topup', compact('user'));
     }
 
-    // Proses masukin saldo ke database
     public function store(Request $request)
     {
         $request->validate([
@@ -22,9 +21,8 @@ class UserTopupController extends Controller
         ]);
 
         $user = Auth::user();
-        $tambahMenit = $request->durasi_jam * 60; // Ubah jam ke menit
+        $tambahMenit = $request->durasi_jam * 60; 
 
-        // Cek dia beli buat PS berapa, terus tambahin saldonya
         if ($request->tipe_ps == 'PS3') {
             $user->saldo_ps3 += $tambahMenit;
         } elseif ($request->tipe_ps == 'PS4') {

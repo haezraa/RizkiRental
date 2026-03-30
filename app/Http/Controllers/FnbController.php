@@ -19,7 +19,6 @@ class FnbController extends Controller
     // Simpan Menu Baru
     public function store(Request $request)
     {
-        // 1. Validasi
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
@@ -28,7 +27,6 @@ class FnbController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // 2. Siapin Data
         $data = $request->all();
 
         if ($request->hasFile('image')) {
@@ -90,10 +88,8 @@ class FnbController extends Controller
 
     public function cashier()
     {
-        // Ambil menu yang stoknya ada
         $products = Product::where('stock', '>', 0)->get();
 
-        // Ambil Unit TV yang lagi MAIN atau PAUSE (biar bisa dipesenin makan)
         $active_consoles = Console::whereIn('status', ['main', 'paused'])->get();
 
         return view('fnb.cashier', compact('products', 'active_consoles'));
