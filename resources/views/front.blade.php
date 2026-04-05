@@ -319,49 +319,54 @@
                 <h3 class="text-xl font-black uppercase tracking-wider" id="modalTitle">Booking PC</h3>
             </div>
 
-            <form action="{{ route('front.booking') }}" method="POST" class="p-6 bg-slate-50">
-                @csrf
-                <input type="hidden" name="console_id" id="inputConsoleId">
+            <div class="p-6 bg-slate-50">
+                @auth
+                    <form action="{{ route('front.booking') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="console_id" id="inputConsoleId">
 
-                <div class="mb-5">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Username Billing <span class="text-red-500">*</span></label>
-                    <input type="text" name="username_billing" class="w-full border border-slate-300 rounded p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none" required placeholder="Masukkan Username...">
-                </div>
+                        <div class="mb-5 text-center bg-blue-50 p-3 rounded-xl border border-blue-100 shadow-sm">
+                            <p class="text-xs text-blue-500 font-bold uppercase mb-1">Booking Atas Nama:</p>
+                            <p class="text-lg font-black text-[#2251a5] leading-none">{{ auth()->user()->name }}</p>
+                        </div>
 
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Pilih Waktu (Jam) <span class="text-red-500">*</span></label>
-                    <select name="durasi_jam" class="w-full border border-slate-300 rounded p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none cursor-pointer font-semibold" required>
-                        <option value="1">1 Jam</option>
-                        <option value="2">2 Jam</option>
-                        <option value="3">3 Jam</option>
-                        <option value="4">4 Jam</option>
-                        <option value="5">5 Jam</option>
-                    </select>
-                </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Pilih Durasi Waktu (Jam) <span class="text-red-500">*</span></label>
+                            <select name="durasi_jam" class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-[#2251a5] focus:outline-none cursor-pointer font-bold" required>
+                                <option value="1">1 Jam</option>
+                                <option value="2">2 Jam</option>
+                                <option value="3">3 Jam</option>
+                                <option value="4">4 Jam</option>
+                                <option value="5">5 Jam</option>
+                            </select>
+                            <p class="text-[10px] text-slate-500 mt-2 text-center">*Saldo waktu kamu akan dipotong sesuai dengan tipe konsol yang di-booking.</p>
+                        </div>
 
-                <div class="flex gap-2 mt-4">
-                    <button type="button" onclick="tutupModalBooking()" class="w-1/3 py-2 bg-gray-200 text-gray-700 font-bold rounded hover:bg-gray-300 transition text-sm">Kembali</button>
-                    <button type="submit" class="w-2/3 py-2 bg-[#2251a5] text-white font-bold rounded hover:bg-blue-800 transition text-sm flex items-center justify-center gap-2">
-                        Konfirmasi Booking
-                    </button>
-                </div>
-            </form>
+                        <div class="flex gap-2 mt-4">
+                            <button type="button" onclick="tutupModalBooking()" class="w-1/3 py-2.5 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition text-sm">Batal</button>
+                            <button type="submit" class="w-2/3 py-2.5 bg-[#2251a5] text-white font-bold rounded-lg hover:bg-blue-800 transition shadow-md text-sm flex items-center justify-center gap-2">
+                                Gas Booking!
+                            </button>
+                        </div>
+                    </form>
+                @else
+                    <div class="text-center py-4">
+                        <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-3 text-3xl">🔒</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Kamu Belum Login!</h4>
+                        <p class="text-xs text-slate-500 mb-6 font-medium">Silakan login terlebih dahulu untuk melakukan booking TV dan menggunakan saldo waktu kamu.</p>
+
+                        <div class="flex gap-2">
+                            <button type="button" onclick="tutupModalBooking()" class="w-1/2 py-2.5 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition text-sm">Kembali</button>
+                            <a href="{{ route('login') }}" class="w-1/2 py-2.5 bg-[#2251a5] text-white font-bold rounded-lg hover:bg-blue-800 transition shadow-md text-sm inline-block">Login Sekarang</a>
+                        </div>
+                    </div>
+                @endauth
+            </div>
+
         </div>
     </div>
 
-    <script>
-        function bukaModalBooking(id, nama_tv) {
-            document.getElementById('inputConsoleId').value = id;
-            document.getElementById('modalTitle').innerText = 'Booking ' + nama_tv;
-            document.getElementById('modalBooking').classList.remove('hidden');
-        }
-
-        function tutupModalBooking() {
-            document.getElementById('modalBooking').classList.add('hidden');
-        }
-    </script>
-
-@if(session('success'))
+    @if(session('success'))
         <div id="toast-success" class="fixed top-24 right-6 flex items-center w-full max-w-sm p-4 mb-4 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-l-4 border-green-500 z-[100] transition-opacity duration-500">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-green-500 bg-green-100 rounded-xl">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -373,8 +378,10 @@
         <script>
             setTimeout(() => {
                 let toast = document.getElementById('toast-success');
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 500);
+                if(toast) {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }
             }, 4000);
         </script>
     @endif
@@ -391,31 +398,45 @@
         <script>
             setTimeout(() => {
                 let toast = document.getElementById('toast-error');
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 500);
+                if(toast) {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }
             }, 4000);
         </script>
     @endif
 
     <script>
+        function bukaModalBooking(id, nama_tv) {
+            document.getElementById('inputConsoleId').value = id;
+            document.getElementById('modalTitle').innerText = 'Booking ' + nama_tv;
+            document.getElementById('modalBooking').classList.remove('hidden');
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function tutupModalBooking() {
+            document.getElementById('modalBooking').classList.add('hidden');
+
+            document.body.classList.remove('overflow-hidden');
+        }
+
         function jalankanTimer() {
             const timers = document.querySelectorAll('.countdown-timer');
             const sekarang = new Date().getTime();
 
             timers.forEach(timer => {
+                if (!timer.getAttribute('data-endtime')) return;
+
                 const waktuSelesai = new Date(timer.getAttribute('data-endtime')).getTime();
                 const selisih = waktuSelesai - sekarang;
 
-                if (selisih < 0) {
-                    timer.innerHTML = "WAKTU HABIS";
-                    timer.classList.remove('text-red-600');
-                    timer.classList.add('text-yellow-500', 'animate-bounce');
+                if (selisih <= 0) {
+                    timer.innerHTML = "00:00:00";
 
                     if (!timer.hasAttribute('data-refreshed')) {
                         timer.setAttribute('data-refreshed', 'true');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 5000);
+                        window.location.reload();
                     }
                 } else {
                     const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
