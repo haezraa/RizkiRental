@@ -19,7 +19,7 @@
                 <span class="text-xl font-black text-[#2251a5] tracking-tight">RIZKI RENTAL</span>
             </a>
 
-           <div class="hidden md:flex items-center space-x-6 font-semibold text-sm">
+            <div class="hidden md:flex items-center space-x-6 font-semibold text-sm">
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#status">Status Unit</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#harga">Pricelist</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="#fasilitas">Fasilitas</a>
@@ -100,13 +100,23 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
                             @foreach($typeConsoles as $console)
                                 @if($console->status == 'ready')
-                                    <div onclick="bukaModalBooking('{{ $console->id }}', '{{ $console->name }}')" class="rounded-2xl border-2 border-blue-100 bg-white p-4 text-center hover:border-blue-400 hover:shadow-md transition-all cursor-pointer">
-                                        <div class="text-sm font-bold text-slate-700 mb-2">{{ $console->name }}</div>
-                                        <div class="flex items-center justify-center gap-1.5 bg-blue-50 py-1 rounded-md">
-                                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
-                                            <span class="text-[10px] text-blue-700 font-black tracking-wider uppercase">Ready</span>
+                                    @auth
+                                        <div onclick="bukaModalBooking('{{ $console->id }}', '{{ $console->name }}')" class="rounded-2xl border-2 border-blue-100 bg-white p-4 text-center hover:border-blue-400 hover:shadow-md transition-all cursor-pointer">
+                                            <div class="text-sm font-bold text-slate-700 mb-2">{{ $console->name }}</div>
+                                            <div class="flex items-center justify-center gap-1.5 bg-blue-50 py-1 rounded-md">
+                                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                                <span class="text-[10px] text-blue-700 font-black tracking-wider uppercase">Ready</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div onclick="tampilToastBelumLogin()" class="rounded-2xl border-2 border-blue-100 bg-white p-4 text-center hover:border-red-400 hover:shadow-md transition-all cursor-pointer">
+                                            <div class="text-sm font-bold text-slate-700 mb-2">{{ $console->name }}</div>
+                                            <div class="flex items-center justify-center gap-1.5 bg-blue-50 py-1 rounded-md">
+                                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                                <span class="text-[10px] text-blue-700 font-black tracking-wider uppercase">Ready</span>
+                                            </div>
+                                        </div>
+                                    @endauth
                                 @else
                                     <div class="rounded-2xl border-2 border-red-100 bg-red-50 p-4 text-center opacity-90 relative overflow-hidden">
                                         <div class="text-sm font-bold text-slate-700 mb-1">{{ $console->name }}</div>
@@ -454,6 +464,24 @@
 
         setInterval(jalankanTimer, 1000);
         jalankanTimer();
+
+        function tampilToastBelumLogin() {
+            let toastHtml = `
+            <div id="toast-js" class="fixed top-24 right-6 flex items-center w-full max-w-sm p-4 mb-4 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-l-4 border-red-500 z-[100] transition-opacity duration-500">
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-red-500 bg-red-100 rounded-xl">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/></svg>
+                </div>
+                <div class="ms-3 text-sm font-bold text-slate-700 leading-tight">Kamu harus login dulu buat booking.</div>
+            </div>`;
+
+            document.body.insertAdjacentHTML('beforeend', toastHtml);
+            let toast = document.getElementById('toast-js');
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
