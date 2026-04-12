@@ -20,6 +20,7 @@
             <div class="hidden md:flex items-center space-x-6 font-semibold text-sm">
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="{{ route('front') }}#status">Status Unit</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="{{ route('front') }}#harga">Pricelist</a>
+                <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="{{ route('front') }}#fasilitas">Fasilitas</a>
                 <a class="text-slate-500 hover:text-[#2251a5] transition-colors" href="{{ route('front') }}#lokasi">Lokasi</a>
 
                 <div class="h-6 w-px bg-slate-200 mx-2"></div>
@@ -50,45 +51,45 @@
     <div class="max-w-[700px] mx-auto px-6 py-12 md:py-16">
 
         <div class="text-center mb-10">
-            <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">Top Up <span class="text-[#2251a5]">Saldo Waktu</span></h2>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">Hi, <span class="text-[#2251a5]">{{ explode(' ', $user->name)[0] }}!</span></h2>
             <p class="text-slate-500 mt-3 font-medium">Isi dompet waktu kamu dan langsung gaskeun mabar tanpa ribet antri di kasir.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 mb-8 relative overflow-hidden">
+        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mb-8 relative">
             <div class="absolute top-0 right-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl -mr-10 -mt-10 opacity-60"></div>
 
             <div class="relative z-10">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                        <span></span> Dompet Waktu
+                <div class="bg-slate-50 px-8 py-5 border-b border-slate-100">
+                    <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                        Dompet Waktu
                     </h3>
-                    <span class="bg-blue-50 text-[#2251a5] text-xs font-bold px-3 py-1 rounded-full border border-blue-100">{{ $user->name }}</span>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 md:gap-6">
-                    <div class="text-center p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors">
-                        <div class="text-xs font-bold text-slate-500 mb-1">PS 3</div>
-                        <div class="text-lg md:text-xl font-black text-slate-800">{{ floor($user->saldo_ps3/60) }}<span class="text-sm text-slate-400 font-bold">j</span> {{ $user->saldo_ps3%60 }}<span class="text-sm text-slate-400 font-bold">m</span></div>
-                    </div>
+                <div class="p-8">
+                    <div class="grid grid-cols-3 gap-3 md:gap-6">
+                        <div class="text-center p-4 bg-[#2251a5] rounded-2xl border border-blue-800 shadow-md text-white transition-colors">
+                            <div class="text-xs font-bold text-blue-200 mb-1">PS 3</div>
+                            <div class="text-lg md:text-xl font-black text-white">{{ floor($user->saldo_ps3/60) }}<span class="text-sm text-blue-300 font-bold">j</span> {{ $user->saldo_ps3%60 }}<span class="text-sm text-blue-300 font-bold">m</span></div>
+                        </div>
 
-                    <div class="text-center p-4 bg-gradient-to-br from-[#1a3d7c] to-[#2251a5] rounded-2xl border border-blue-800 shadow-lg text-white transform md:-translate-y-2 relative">
-                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">Favorit</div>
-                        <div class="text-xs font-bold text-blue-200 mb-1 mt-1">PS 4</div>
-                        <div class="text-lg md:text-xl font-black text-white">{{ floor($user->saldo_ps4/60) }}<span class="text-sm text-blue-300 font-bold">j</span> {{ $user->saldo_ps4%60 }}<span class="text-sm text-blue-300 font-bold">m</span></div>
-                    </div>
+                        <div class="text-center p-4 bg-[#2251a5] rounded-2xl border border-blue-800 shadow-md text-white transition-colors">
+                            <div class="text-xs font-bold text-blue-200 mb-1">PS 4</div>
+                            <div class="text-lg md:text-xl font-black text-white">{{ floor($user->saldo_ps4/60) }}<span class="text-sm text-blue-300 font-bold">j</span> {{ $user->saldo_ps4%60 }}<span class="text-sm text-blue-300 font-bold">m</span></div>
+                        </div>
 
-                    <div class="text-center p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors">
-                        <div class="text-xs font-bold text-slate-500 mb-1">PS 5</div>
-                        <div class="text-lg md:text-xl font-black text-slate-800">{{ floor($user->saldo_ps5/60) }}<span class="text-sm text-slate-400 font-bold">j</span> {{ $user->saldo_ps5%60 }}<span class="text-sm text-slate-400 font-bold">m</span></div>
+                        <div class="text-center p-4 bg-[#2251a5] rounded-2xl border border-blue-800 shadow-md text-white transition-colors">
+                            <div class="text-xs font-bold text-blue-200 mb-1">PS 5</div>
+                            <div class="text-lg md:text-xl font-black text-white">{{ floor($user->saldo_ps5/60) }}<span class="text-sm text-blue-300 font-bold">j</span> {{ $user->saldo_ps5%60 }}<span class="text-sm text-blue-300 font-bold">m</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mb-8">
             <div class="bg-slate-50 px-8 py-5 border-b border-slate-100">
                 <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
-                    <span></span> Beli Paket Waktu
+                    Beli Paket Waktu
                 </h3>
             </div>
 
@@ -151,6 +152,37 @@
                 </p>
             </form>
         </div>
+
+        <div class="bg-blue-50/50 rounded-3xl p-6 md:p-8 border border-blue-100">
+            <h3 class="text-sm font-black text-[#2251a5] uppercase tracking-wider mb-6 text-center">Cara Booking & Main</h3>
+
+            <div class="space-y-6">
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-full bg-white border-2 border-[#2251a5] text-[#2251a5] font-black flex items-center justify-center flex-shrink-0 shadow-sm">1</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Isi Saldo Waktu</h4>
+                        <p class="text-sm text-slate-500 mt-1 leading-relaxed">Pilih tipe konsol yang mau kamu mainin (PS3, PS4, atau PS5) dan beli durasi jamnya di form atas. Saldo otomatis masuk ke dompet kamu.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-full bg-white border-2 border-[#2251a5] text-[#2251a5] font-black flex items-center justify-center flex-shrink-0 shadow-sm">2</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Pilih TV Ready</h4>
+                        <p class="text-sm text-slate-500 mt-1 leading-relaxed">Kembali ke halaman utama, cari kotak TV yang statusnya warna hijau <span class="font-bold text-green-600">READY</span>, lalu klik TV tersebut.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-full bg-white border-2 border-[#2251a5] text-[#2251a5] font-black flex items-center justify-center flex-shrink-0 shadow-sm">3</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Gas Booking!</h4>
+                        <p class="text-sm text-slate-500 mt-1 leading-relaxed">Pilih durasi main di popup, klik booking. Waktu kamu di dompet otomatis terpotong, dan kamu siap mabar!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     @if(session('success'))

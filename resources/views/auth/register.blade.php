@@ -5,99 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar - Rizki Rental PS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4 relative overflow-hidden selection:bg-[#2251a5] selection:text-white">
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-[#2251a5] selection:text-white relative">
 
-    <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-blue-400/20 rounded-full blur-3xl z-0 pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-[#2251a5]/15 rounded-full blur-3xl z-0 pointer-events-none"></div>
+    <div class="w-full max-w-[900px] bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 border border-white/50">
 
-    <div class="w-full max-w-[420px] bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 p-8 sm:p-10 relative z-10 transform transition-all my-8">
-
-        <a href="{{ route('front') }}" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 bg-slate-50 hover:bg-red-50 p-2 rounded-full transition-colors z-20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <a href="{{ route('front') }}" class="absolute top-6 right-6 text-slate-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-all z-20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
         </a>
 
-        <div class="text-center mb-8 mt-2">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo Rizki Rental" class="h-16 w-16 mx-auto mb-4 drop-shadow-sm hover:scale-105 transition-transform">
-            <h2 class="text-2xl font-black text-slate-800 tracking-tight">RIZKI RENTAL</h2>
-            <p class="text-slate-500 text-sm mt-1 font-medium">Daftar sekarang buat mabar sepuasnya! 🎮</p>
+        <div class="hidden md:flex w-1/2 bg-gradient-to-bl from-[#1a3d7c] to-[#2251a5] relative p-12 flex-col justify-center overflow-hidden text-white">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-bl from-white/10 to-transparent rounded-full border border-white/20"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-72 h-72 bg-gradient-to-tr from-white/10 to-transparent rounded-full border border-white/10"></div>
+            <div class="absolute top-[30%] right-[20%] w-24 h-24 bg-white/5 rounded-full border border-white/30 backdrop-blur-sm shadow-xl"></div>
+
+            <div class="relative z-10 text-left">
+                <h1 class="text-4xl font-black mb-2 tracking-tight drop-shadow-md">JOIN US</h1>
+                <h2 class="text-xl font-bold text-blue-200 mb-6 uppercase tracking-widest">MABAR LEBIH SERU</h2>
+                <p class="text-blue-100 text-sm leading-relaxed max-w-sm font-medium">
+                    Buat akun kamu sekarang. Nikmati kemudahan booking TV, cek sisa waktu, dan promo menarik khusus buat player terdaftar.
+                </p>
+            </div>
         </div>
 
-        @if ($errors->any())
-            <div class="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-bold">
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        <div class="w-full md:w-1/2 p-8 md:p-10 relative flex flex-col justify-center">
+
+            <div class="mb-6 text-center md:text-left mt-4 md:mt-0">
+                <h2 class="text-3xl font-black text-slate-800 tracking-tight">Sign Up</h2>
+                <p class="text-slate-500 text-sm mt-2 font-medium">Daftar sekarang untuk mulai mabar.</p>
             </div>
-        @endif
 
-        <form method="POST" action="{{ route('register') }}" class="space-y-4">
-            @csrf
-
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Nama Player</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    </div>
-                    <input type="text" name="name" value="{{ old('name') }}" required autofocus
-                        class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#2251a5]/20 focus:border-[#2251a5] transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
-                        placeholder="Nama kamu">
+            @if ($errors->any())
+                <div class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-xs font-bold">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div>
+            @endif
 
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Email Address</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+            <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                @csrf
+
+                <div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <input type="text" name="name" value="{{ old('name') }}" required autofocus
+                            class="w-full pl-12 pr-4 py-3.5 bg-slate-100 border-none rounded-xl focus:bg-blue-50 focus:ring-2 focus:ring-[#2251a5]/30 transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
+                            placeholder="Full Name">
                     </div>
-                    <input type="email" name="email" value="{{ old('email') }}" required
-                        class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#2251a5]/20 focus:border-[#2251a5] transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
-                        placeholder="nama@email.com">
                 </div>
-            </div>
 
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Password</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <input type="email" name="email" value="{{ old('email') }}" required
+                            class="w-full pl-12 pr-4 py-3.5 bg-slate-100 border-none rounded-xl focus:bg-blue-50 focus:ring-2 focus:ring-[#2251a5]/30 transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
+                            placeholder="Email Address">
                     </div>
-                    <input type="password" name="password" required
-                        class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#2251a5]/20 focus:border-[#2251a5] transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
-                        placeholder="Minimal 8 karakter">
                 </div>
-            </div>
 
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Ulangi Password</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                <div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <input type="password" name="password" required
+                            class="w-full pl-12 pr-4 py-3.5 bg-slate-100 border-none rounded-xl focus:bg-blue-50 focus:ring-2 focus:ring-[#2251a5]/30 transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
+                            placeholder="Password">
                     </div>
-                    <input type="password" name="password_confirmation" required
-                        class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#2251a5]/20 focus:border-[#2251a5] transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
-                        placeholder="Ketik ulang password">
                 </div>
+
+                <div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-[#2251a5] transition-colors" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <input type="password" name="password_confirmation" required
+                            class="w-full pl-12 pr-4 py-3.5 bg-slate-100 border-none rounded-xl focus:bg-blue-50 focus:ring-2 focus:ring-[#2251a5]/30 transition-all outline-none font-semibold text-slate-700 placeholder-slate-400"
+                            placeholder="Confirm Password">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-[#1a3d7c] hover:bg-[#2251a5] text-white font-black py-3.5 rounded-xl shadow-lg shadow-blue-900/20 hover:-translate-y-0.5 transition-all duration-200 mt-2 tracking-wide">
+                    SIGN UP
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm text-slate-500 font-medium">
+                Already have an account?
+                <a href="{{ route('login') }}" class="text-[#2251a5] font-black hover:underline transition-all">Sign In here</a>
             </div>
-
-            <button type="submit" class="w-full bg-[#2251a5] hover:bg-blue-800 text-white font-black py-4 rounded-xl shadow-[0_4px_14px_0_rgb(34,81,165,0.39)] hover:shadow-[0_6px_20px_rgba(34,81,165,0.23)] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 mt-4">
-                <span>DAFTAR SEKARANG</span>
-            </button>
-        </form>
-
-        <p class="mt-8 text-center text-sm text-slate-500 font-medium">
-            Sudah punya akun?
-            <a href="{{ route('login') }}" class="text-[#2251a5] font-black hover:underline transition-all">Masuk di sini</a>
-        </p>
+        </div>
     </div>
-
 </body>
 </html>
