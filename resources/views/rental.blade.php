@@ -56,7 +56,7 @@
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <span>🎮</span> <span id="modalTitle">Booking TV</span>
                 </h3>
-                <button onclick="closeModal()" class="text-white/70 hover:text-white text-2xl leading-none transition">&times;</button>
+                <button type="button" onclick="closeModal()" class="text-white/70 hover:text-white text-2xl leading-none transition">&times;</button>
             </div>
 
             <div class="overflow-y-auto scrollbar-hide flex-1 bg-white relative">
@@ -69,7 +69,7 @@
                     <div class="mb-4">
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nama Player</label>
                         <input type="text" name="nama_pemain" id="inputNamaPemain"
-                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                            class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none transition"
                             required placeholder="Siapa yang main?">
                     </div>
 
@@ -78,7 +78,15 @@
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Durasi (Jam)</label>
                             <input type="number" name="durasi" id="inputDurasi" min="1" value="1"
                                 oninput="calculateTotal()"
-                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none transition">
+
+                            <div class="mt-3 flex items-center gap-2 bg-blue-50 p-2 rounded-lg border border-blue-100">
+                                <input type="checkbox" name="is_begadang" id="checkBegadang" onchange="toggleBegadang()" value="1"
+                                    class="w-4 h-4 text-[#2251a5] bg-white border-gray-300 rounded focus:ring-[#2251a5] cursor-pointer">
+                                <label for="checkBegadang" class="text-[11px] font-black text-[#2251a5] uppercase cursor-pointer tracking-wider">
+                                    Paket Begadang
+                                </label>
+                            </div>
                         </div>
 
                         <div>
@@ -93,7 +101,7 @@
                                         <input type="number" name="qty[{{ $item->id }}]"
                                             data-price="{{ $item->price }}" oninput="calculateTotal()" min="0"
                                             max="{{ $item->stock }}"
-                                            class="fnb-qty w-10 h-8 text-center border border-gray-200 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                                            class="fnb-qty w-10 h-8 text-center border border-gray-200 rounded text-sm focus:ring-1 focus:ring-[#2251a5] focus:outline-none"
                                             placeholder="0">
                                     </div>
                                 @empty
@@ -110,7 +118,7 @@
                             <p class="text-base text-blue-500 mt-1 font-bold uppercase tracking-wider">Total Bayar : </p>
                         </div>
                         <div class="text-right">
-                            <h3 class="text-3xl font-black text-blue-600 tracking-tight" id="liveTotalDisplay">Rp 0</h3>
+                            <h3 class="text-3xl font-black text-[#2251a5] tracking-tight" id="liveTotalDisplay">Rp 0</h3>
                         </div>
                     </div>
 
@@ -120,13 +128,13 @@
                         <div class="grid grid-cols-2 gap-3 mb-3">
                             <label class="cursor-pointer relative group">
                                 <input type="radio" name="payment_method" value="cash" class="peer sr-only" checked onchange="toggleQris(false)">
-                                <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-bold text-center transition-all flex items-center justify-center gap-2 group-hover:bg-gray-50">
+                                <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-[#2251a5] peer-checked:bg-blue-50 peer-checked:text-[#2251a5] font-bold text-center transition-all flex items-center justify-center gap-2 group-hover:bg-gray-50">
                                     <span>💵</span> Tunai
                                 </div>
                             </label>
                             <label class="cursor-pointer relative group">
                                 <input type="radio" name="payment_method" value="qris" class="peer sr-only" onchange="toggleQris(true)">
-                                <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-bold text-center transition-all flex items-center justify-center gap-2 group-hover:bg-gray-50">
+                                <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-[#2251a5] peer-checked:bg-blue-50 peer-checked:text-[#2251a5] font-bold text-center transition-all flex items-center justify-center gap-2 group-hover:bg-gray-50">
                                     <span>📱</span> QRIS
                                 </div>
                             </label>
@@ -141,7 +149,7 @@
                                     <p class="text-sm font-bold text-gray-800">Scan QRIS</p>
                                     <p class="text-[10px] text-gray-500 mt-1 leading-relaxed">
                                         Cek mutasi sebelum klik tombol Start. <br>
-                                        <span class="text-blue-600 font-semibold">Otomatis masuk sistem.</span>
+                                        <span class="text-[#2251a5] font-semibold">Otomatis masuk sistem.</span>
                                     </p>
                                 </div>
                             </div>
@@ -165,14 +173,14 @@
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <span>📺</span> <span>Tambah Unit Baru</span>
                 </h3>
-                <button onclick="closeAddModal()" class="text-white/70 hover:text-white text-2xl leading-none">&times;</button>
+                <button type="button" onclick="closeAddModal()" class="text-white/70 hover:text-white text-2xl leading-none">&times;</button>
             </div>
 
             <form action="{{ route('consoles.store') }}" method="POST" class="p-6 text-gray-800">
                 @csrf
                 <div class="mb-4">
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nama Unit</label>
-                    <input type="text" name="nama_unit" class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" required placeholder="Contoh: TV 05">
+                    <input type="text" name="nama_unit" class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none placeholder-gray-400" required placeholder="Contoh: TV 05">
                 </div>
 
                 <div class="mb-6">
@@ -180,15 +188,15 @@
                     <div class="grid grid-cols-3 gap-3">
                         <label class="cursor-pointer relative">
                             <input type="radio" name="tipe_ps" value="PS3" class="peer sr-only" required>
-                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-bold text-center transition-all hover:bg-gray-50">PS 3</div>
+                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-[#2251a5] peer-checked:bg-blue-50 peer-checked:text-[#2251a5] font-bold text-center transition-all hover:bg-gray-50">PS 3</div>
                         </label>
                         <label class="cursor-pointer relative">
                             <input type="radio" name="tipe_ps" value="PS4" class="peer sr-only">
-                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-bold text-center transition-all hover:bg-gray-50">PS 4</div>
+                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-[#2251a5] peer-checked:bg-blue-50 peer-checked:text-[#2251a5] font-bold text-center transition-all hover:bg-gray-50">PS 4</div>
                         </label>
                         <label class="cursor-pointer relative">
                             <input type="radio" name="tipe_ps" value="PS5" class="peer sr-only">
-                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-bold text-center transition-all hover:bg-gray-50">PS 5</div>
+                            <div class="p-3 rounded-lg border-2 border-gray-200 text-gray-500 peer-checked:border-[#2251a5] peer-checked:bg-blue-50 peer-checked:text-[#2251a5] font-bold text-center transition-all hover:bg-gray-50">PS 5</div>
                         </label>
                     </div>
                 </div>
@@ -215,11 +223,13 @@
             document.getElementById('bookingForm').reset();
             document.getElementById('qrisArea').classList.add('hidden'); // Sembunyiin QRIS
 
-            // Reset Nama
+            // Reset Nama & Checkbox Begadang
             document.getElementById('inputNamaPemain').readOnly = false;
             document.getElementById('inputNamaPemain').value = "";
+            document.getElementById('checkBegadang').checked = false;
+            toggleBegadang(); // Panggil fungsi reset durasi
 
-            // Trigger hitung total awal (1 jam)
+            // Trigger hitung total awal
             calculateTotal();
         }
 
@@ -227,22 +237,47 @@
             document.getElementById('bookingModal').classList.add('hidden');
         }
 
+        function toggleBegadang() {
+            const isBegadang = document.getElementById('checkBegadang').checked;
+            const inputDurasi = document.getElementById('inputDurasi');
+
+            if(isBegadang) {
+                inputDurasi.disabled = true; // Kunci input jam
+                inputDurasi.classList.add('opacity-50', 'bg-gray-200'); // Efek abu-abu
+            } else {
+                inputDurasi.disabled = false; // Buka input jam
+                inputDurasi.classList.remove('opacity-50', 'bg-gray-200');
+            }
+            calculateTotal(); // Hitung ulang harga
+        }
+
         // 2. LOGIC MENGHITUNG TOTAL HARGA
         function calculateTotal() {
             let type = document.getElementById('modalConsoleType').value;
+            let isBegadang = document.getElementById('checkBegadang').checked;
             let pricePerHour = 0;
+            let priceBegadang = 0;
 
+            // HARGA NORMAL & HARGA BEGADANG
             if (type === 'PS3') {
                 pricePerHour = 5000;
+                priceBegadang = 20000;
             } else if (type === 'PS4') {
                 pricePerHour = 7000;
+                priceBegadang = 30000;
             } else if (type === 'PS5') {
                 pricePerHour = 12000;
+                priceBegadang = 50000;
             }
 
             // Hitung Rental
-            let duration = parseInt(document.getElementById('inputDurasi').value) || 0;
-            let rentalTotal = pricePerHour * duration;
+            let rentalTotal = 0;
+            if(isBegadang) {
+                rentalTotal = priceBegadang; // Pake harga flat begadang
+            } else {
+                let duration = parseInt(document.getElementById('inputDurasi').value) || 0;
+                rentalTotal = pricePerHour * duration; // Pake harga per jam
+            }
 
             // Hitung menu fnb
             let fnbTotal = 0;
