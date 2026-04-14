@@ -14,6 +14,12 @@
 
 @section('konten')
 
+    @php
+        $nowHour = \Carbon\Carbon::now('Asia/Jakarta')->hour;
+        // Buka order jam 21:00 (Malam) sampai sebelum 02:00 (Pagi)
+        $isBegadangAllowed = ($nowHour >= 21 || $nowHour < 2);
+    @endphp
+
     <div class="mb-10">
         <h3 class="text-xl font-bold mb-4 border-l-4 border-brand-blue pl-3 text-gray-800">PlayStation 3 Area</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -80,12 +86,25 @@
                                 oninput="calculateTotal()"
                                 class="w-full bg-gray-50 border border-gray-300 text-gray-900 font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-[#2251a5] focus:outline-none transition">
 
-                            <div class="mt-3 flex items-center gap-2 bg-blue-50 p-2 rounded-lg border border-blue-100">
-                                <input type="checkbox" name="is_begadang" id="checkBegadang" onchange="toggleBegadang()" value="1"
-                                    class="w-4 h-4 text-[#2251a5] bg-white border-gray-300 rounded focus:ring-[#2251a5] cursor-pointer">
-                                <label for="checkBegadang" class="text-[11px] font-black text-[#2251a5] uppercase cursor-pointer tracking-wider">
-                                    Paket Begadang
-                                </label>
+                            <div class="mt-3 bg-blue-50 p-2 rounded-lg border border-blue-100">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="is_begadang" id="checkBegadang" onchange="toggleBegadang()" value="1"
+                                            class="w-4 h-4 text-[#2251a5] bg-white border-gray-300 rounded focus:ring-[#2251a5] cursor-pointer disabled:opacity-50"
+                                            {{ !$isBegadangAllowed ? 'disabled' : '' }}>
+                                        <label for="checkBegadang" class="text-[11px] font-black text-[#2251a5] uppercase cursor-pointer tracking-wider {{ !$isBegadangAllowed ? 'opacity-50' : '' }}">
+                                            Paket Begadang
+                                        </label>
+                                    </div>
+                                    @if(!$isBegadangAllowed)
+                                        <span class="text-[9px] font-bold text-red-500 uppercase bg-red-100 px-2 py-0.5 rounded">Tutup</span>
+                                    @else
+                                        <span class="text-[9px] font-bold text-green-600 uppercase bg-green-100 px-2 py-0.5 rounded">Buka</span>
+                                    @endif
+                                </div>
+                                @if(!$isBegadangAllowed)
+                                    <p class="text-[9px] text-red-500 font-bold mt-1.5 leading-tight">*Order khusus jam 21:00 - 02:00.</p>
+                                @endif
                             </div>
                         </div>
 
@@ -168,7 +187,6 @@
 
     <div id="addUnitModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-gray-200 transform transition-all">
-
             <div class="bg-[#2251a5] px-6 py-4 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <span>📺</span> <span>Tambah Unit Baru</span>
@@ -209,27 +227,27 @@
     </div>
 
     <script>
-        // 1. SETUP LOGIC MODAL BOOKING
         function openModal(name, type, id) {
             const modal = document.getElementById('bookingModal');
             modal.classList.remove('hidden');
 
-            // Set Data ke Input Hidden
             document.getElementById('modalTitle').innerText = name + ' (' + type + ')';
             document.getElementById('modalConsoleId').value = id;
             document.getElementById('modalConsoleType').value = type;
 
-            // Reset Form & UI
             document.getElementById('bookingForm').reset();
-            document.getElementById('qrisArea').classList.add('hidden'); // Sembunyiin QRIS
+            document.getElementById('qrisArea').classList.add('hidden');
 
-            // Reset Nama & Checkbox Begadang
             document.getElementById('inputNamaPemain').readOnly = false;
             document.getElementById('inputNamaPemain').value = "";
-            document.getElementById('checkBegadang').checked = false;
-            toggleBegadang(); // Panggil fungsi reset durasi
 
-            // Trigger hitung total awal
+            // Uncheck & lepas kunci input durasi
+            const checkBegadang = document.getElementById('checkBegadang');
+            if(checkBegadang && !checkBegadang.disabled) {
+                checkBegadang.checked = false;
+            }
+            toggleBegadang();
+
             calculateTotal();
         }
 
@@ -237,46 +255,57 @@
             document.getElementById('bookingModal').classList.add('hidden');
         }
 
+        // LOGIC TOGGLE BEGADANG (Ubah Tampilan Jam)
         function toggleBegadang() {
-            const isBegadang = document.getElementById('checkBegadang').checked;
+            const checkBegadang = document.getElementById('checkBegadang');
+            if(!checkBegadang) return;
+
+            const isBegadang = checkBegadang.checked;
             const inputDurasi = document.getElementById('inputDurasi');
 
             if(isBegadang) {
-                inputDurasi.disabled = true; // Kunci input jam
-                inputDurasi.classList.add('opacity-50', 'bg-gray-200'); // Efek abu-abu
+                inputDurasi.dataset.oldValue = inputDurasi.value; // simpan jam sebelumnya
+                inputDurasi.type = 'text';
+                inputDurasi.value = "S/D 06:00 Pagi";
+                inputDurasi.readOnly = true;
+                inputDurasi.classList.add('opacity-50', 'bg-gray-200', 'text-xs');
             } else {
-                inputDurasi.disabled = false; // Buka input jam
-                inputDurasi.classList.remove('opacity-50', 'bg-gray-200');
+                inputDurasi.type = 'number';
+                inputDurasi.value = inputDurasi.dataset.oldValue || 1;
+                inputDurasi.readOnly = false;
+                inputDurasi.classList.remove('opacity-50', 'bg-gray-200', 'text-xs');
             }
-            calculateTotal(); // Hitung ulang harga
+            calculateTotal();
         }
 
-        // 2. LOGIC MENGHITUNG TOTAL HARGA
+        // LOGIC MENGHITUNG TOTAL HARGA
         function calculateTotal() {
             let type = document.getElementById('modalConsoleType').value;
-            let isBegadang = document.getElementById('checkBegadang').checked;
+            let checkBegadang = document.getElementById('checkBegadang');
+            let isBegadang = checkBegadang ? checkBegadang.checked : false;
+
             let pricePerHour = 0;
             let priceBegadang = 0;
 
-            // HARGA NORMAL & HARGA BEGADANG
+            // UPDATE HARGA TERBARU (Sesuai Pricelist)
             if (type === 'PS3') {
                 pricePerHour = 5000;
-                priceBegadang = 20000;
+                priceBegadang = 40000;
             } else if (type === 'PS4') {
                 pricePerHour = 7000;
-                priceBegadang = 30000;
+                priceBegadang = 80000;
             } else if (type === 'PS5') {
                 pricePerHour = 12000;
-                priceBegadang = 50000;
+                priceBegadang = 150000;
             }
 
             // Hitung Rental
             let rentalTotal = 0;
             if(isBegadang) {
-                rentalTotal = priceBegadang; // Pake harga flat begadang
+                rentalTotal = priceBegadang;
             } else {
                 let duration = parseInt(document.getElementById('inputDurasi').value) || 0;
-                rentalTotal = pricePerHour * duration; // Pake harga per jam
+                rentalTotal = pricePerHour * duration;
             }
 
             // Hitung menu fnb
@@ -328,7 +357,6 @@
                     if (distance < 0) {
                         clearInterval(interval);
                         timer.innerHTML = "SELESAI";
-
                         location.reload();
                     } else {
                         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -344,5 +372,4 @@
             });
         });
     </script>
-
 @endsection

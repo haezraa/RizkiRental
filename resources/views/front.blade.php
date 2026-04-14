@@ -59,14 +59,14 @@
         <div class="absolute inset-0 bg-gradient-to-br from-[#1a3d7c]/90 to-[#2251a5]/80"></div>
 
         <div class="relative max-w-[1200px] mx-auto px-6 py-24 md:py-32 flex flex-col items-center text-center z-10">
-            <span class="bg-white/20 border border-white/30 backdrop-blur-sm text-blue-50 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-6 uppercase">
-                Tempat Mabar Ter-Asik se-Tangerang
+            <span class="bg-white/20 border border-white/30 backdrop-blur-sm text-blue-50 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-6">
+            Tempat Rental PS Terbaik di Tangerang!
             </span>
             <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl drop-shadow-lg">
-                Tingkatkan Pengalaman <br> <span class="text-blue-300">Gaming Kamu</span> Disini.
+                Rasakan Pengalaman <br> <span class="text-blue-300">Gaming</span> Tanpa Batas.
             </h1>
             <p class="text-blue-50/90 text-lg md:text-xl max-w-2xl font-medium mb-10 drop-shadow">
-                Pantau ketersediaan unit secara real-time dari HP kamu. Gak perlu takut kehabisan tempat lagi!
+                Sewa PlayStation dengan mudah, cepat, dan tanpa antri. Semua bisa kamu cek langsung secara real-time.
             </p>
             <a href="#status" class="bg-white text-[#2251a5] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:bg-blue-50 hover:-translate-y-1 transition-all duration-300">
                 Cek Ketersediaan Unit Sekarang

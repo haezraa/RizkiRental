@@ -15,30 +15,59 @@ class DashboardController extends Controller
     {
         // 1. Validasi & Cari Console
         $console = Console::find($request->console_id);
-        if (!$console || $console->status == 'active') {
-            return back()->with('error', 'Unit error!');
+        if (!$console || $console->status == 'main') {
+            return back()->with('error', 'Unit error atau sedang dipakai!');
         }
 
-        // 2. Hitung Harga Sewa PS (HARGA NORMAL TANPA DISKON MEMBER LAMA)
-        $harga_per_jam = 0;
+        // Cek apakah ini minta paket begadang
+        $is_begadang = $request->has('is_begadang') ? true : false;
 
-        if ($console->type == 'PS3') $harga_per_jam = 5000;
-        if ($console->type == 'PS4') $harga_per_jam = 7000;
-        if ($console->type == 'PS5') $harga_per_jam = 12000;
+        $now = Carbon::now('Asia/Jakarta');
+        $hour = $now->hour;
 
-        $durasi_jam = (int) $request->durasi;
-        $biaya_sewa = $harga_per_jam * $durasi_jam;
+        $durasi_jam = 0;
+        $durasi_menit = 0;
+        $biaya_sewa = 0;
+        $end_time = null;
+
+        if ($is_begadang) {
+            if (!($hour >= 21 || $hour < 2)) {
+                return back()->with('error', 'Paket Begadang ditutup! Hanya bisa dipesan jam 21:00 sampai 02:00 WIB.');
+            }
+
+            $end_time = Carbon::now('Asia/Jakarta')->setTime(6, 0, 0);
+            if ($hour >= 21) {
+                $end_time->addDay();
+            }
+            $durasi_menit = $now->diffInMinutes($end_time);
+
+            if ($console->type == 'PS3') $biaya_sewa = 40000;
+            if ($console->type == 'PS4') $biaya_sewa = 80000;
+            if ($console->type == 'PS5') $biaya_sewa = 150000;
+
+        } else {
+            // LOGIC SEWA NORMAL (Per Jam)
+            $durasi_jam = (int) $request->durasi;
+            $durasi_menit = $durasi_jam * 60;
+            $end_time = Carbon::now('Asia/Jakarta')->addHours($durasi_jam);
+
+            if ($console->type == 'PS3') $biaya_sewa = 5000 * $durasi_jam;
+            if ($console->type == 'PS4') $biaya_sewa = 7000 * $durasi_jam;
+            if ($console->type == 'PS5') $biaya_sewa = 12000 * $durasi_jam;
+        }
+
         $total_bayar = $biaya_sewa;
 
         // 3. Simpan Transaksi Utama
         $transaction = Transaction::create([
             'console_id' => $console->id,
             'customer_name' => $request->nama_pemain,
-            'duration_minutes' => $durasi_jam * 60,
-            'start_time' => Carbon::now(),
-            'end_time' => Carbon::now()->addHours($durasi_jam),
+            'duration_minutes' => $durasi_menit,
+            'start_time' => Carbon::now('Asia/Jakarta'),
+            'end_time' => $end_time,
             'total_price' => 0,
-            'status' => 'ongoing'
+            'status' => 'ongoing',
+            'is_begadang' => $is_begadang // Simpan Status Begadang ke DB
         ]);
 
         // 4. LOGIC FnB (MAKANAN)
@@ -84,11 +113,11 @@ class DashboardController extends Controller
         if ($transaction->status == 'ongoing') {
             $transaction->update([
                 'status' => 'paused',
-                'paused_at' => Carbon::now()
+                'paused_at' => Carbon::now('Asia/Jakarta')
             ]);
         } elseif ($transaction->status == 'paused') {
             $waktu_pause = Carbon::parse($transaction->paused_at);
-            $sekarang = Carbon::now();
+            $sekarang = Carbon::now('Asia/Jakarta');
             $selisih_menit = $waktu_pause->diffInMinutes($sekarang);
             $new_end_time = Carbon::parse($transaction->end_time)->addMinutes($selisih_menit);
 
@@ -118,9 +147,9 @@ class DashboardController extends Controller
 
     public function index()
     {
-        //LOGIC AUTO RESET
+        //LOGIC AUTO RESET (Cek yang sudah lewat waktu end_time)
         $expired_transactions = Transaction::where('status', 'ongoing')
-            ->where('end_time', '<=', Carbon::now())
+            ->where('end_time', '<=', Carbon::now('Asia/Jakarta'))
             ->get();
 
         foreach ($expired_transactions as $trans) {
@@ -131,12 +160,10 @@ class DashboardController extends Controller
             }
         }
 
-        // Query data
         $ps3_units = Console::where('type', 'PS3')->get();
         $ps4_units = Console::where('type', 'PS4')->get();
         $ps5_units = Console::where('type', 'PS5')->get();
 
-        // Ambil produk buat modal
         $products = Product::where('stock', '>', 0)->get();
 
         return view('rental', compact('ps3_units', 'ps4_units', 'ps5_units', 'products'));

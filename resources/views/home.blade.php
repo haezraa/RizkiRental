@@ -55,7 +55,7 @@
                         <th class="pb-3 font-semibold text-xs uppercase">Player</th>
                         <th class="pb-3 font-semibold text-xs uppercase">Unit</th>
                         <th class="pb-3 font-semibold text-xs uppercase">Durasi</th>
-                        <th class="pb-3 font-semibold text-xs uppercase">Total</th>
+                        <th class="pb-3 font-semibold text-xs uppercase text-center">Paket</th> <th class="pb-3 font-semibold text-xs uppercase text-right">Total</th>
                         <th class="pb-3 font-semibold text-xs uppercase text-right">Status</th>
                     </tr>
                 </thead>
@@ -64,11 +64,31 @@
                         <tr class="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition">
                             <td class="py-3 text-gray-500">{{ $history->created_at->format('H:i') }}</td>
                             <td class="py-3 font-bold text-gray-800">{{ $history->customer_name }}</td>
-                            <td class="py-3 text-blue-600 font-bold">
+                            <td class="py-3 text-[#2251a5] font-bold">
                                 {{ $history->console ? $history->console->name : 'Unit Dihapus' }}
                             </td>
-                            <td class="py-3 text-gray-500">{{ floor($history->duration_minutes / 60) }} Jam</td>
-                            <td class="py-3 text-gray-800 font-bold">Rp {{ number_format($history->total_price, 0, ',', '.') }}</td>
+
+                            <td class="py-3 text-gray-500">
+                                @if(isset($history->is_begadang) && $history->is_begadang == 1)
+                                    <span class="text-xs bg-blue-50 text-[#2251a5] font-bold px-2 py-1 rounded">PAKET</span>
+                                @else
+                                    {{ floor($history->duration_minutes / 60) }} Jam
+                                @endif
+                            </td>
+
+                            <td class="py-3 text-center">
+                                @if(isset($history->is_begadang) && $history->is_begadang == 1)
+                                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-100 text-green-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="py-3 text-gray-800 font-bold text-right">Rp {{ number_format($history->total_price, 0, ',', '.') }}</td>
                             <td class="py-3 text-right">
                                 @if($history->status == 'finished')
                                     <span class="bg-green-100 text-green-600 py-1 px-3 rounded-full text-xs font-bold">Selesai</span>
@@ -81,7 +101,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-gray-400 italic">Belum ada aktivitas hari ini.</td>
+                            <td colspan="7" class="py-8 text-center text-gray-400 italic">Belum ada aktivitas hari ini.</td>
                         </tr>
                     @endforelse
                 </tbody>
