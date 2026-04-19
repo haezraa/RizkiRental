@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('parts.layout')
 
 @section('judul_halaman', 'Home')
 

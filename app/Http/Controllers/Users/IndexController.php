@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Console;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
-class FrontController extends Controller
+class IndexController extends Controller
 {
     public function index()
     {
@@ -23,7 +24,7 @@ class FrontController extends Controller
         }
 
         $consoles = Console::all();
-        return view('front', compact('consoles'));
+        return view('users.index', compact('consoles'));
     }
 
     public function bookingTv(Request $request)

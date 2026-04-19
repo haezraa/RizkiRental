@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -13,7 +14,7 @@ class FnbController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('fnb.index', compact('products'));
+        return view('admin.fnbstok', compact('products'));
     }
 
     // Simpan Menu Baru
@@ -92,6 +93,6 @@ class FnbController extends Controller
 
         $active_consoles = Console::whereIn('status', ['main', 'paused'])->get();
 
-        return view('fnb.cashier', compact('products', 'active_consoles'));
+        return view('admin.fnborder', compact('products', 'active_consoles'));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
@@ -22,6 +23,6 @@ class ReportController extends Controller
         $total_income = $transactions->sum('total_price');
         $total_transaksi = $transactions->count();
 
-        return view('reports.index', compact('transactions', 'total_income', 'total_transaksi', 'startDate', 'endDate'));
+        return view('admin.reports', compact('transactions', 'total_income', 'total_transaksi', 'startDate', 'endDate'));
     }
 }

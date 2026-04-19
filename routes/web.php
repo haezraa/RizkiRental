@@ -1,17 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FnbController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\FrontController;
-use App\Http\Controllers\UserTopupController;
+use App\Http\Controllers\ProfileController;
+
+// admin cont
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FnbController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\AdminUserController;
+// user cont
+use App\Http\Controllers\Users\IndexController;
+use App\Http\Controllers\Users\UserTopupController;
 
 // all rute
-Route::get('/', [FrontController::class, 'index'])->name('front');
-Route::post('/booking/tv', [FrontController::class, 'bookingTv'])->name('front.booking');
+Route::get('/', [IndexController::class, 'index'])->name('front');
+Route::post('/booking/tv', [IndexController::class, 'bookingTv'])->name('front.booking');
 
 // rute login
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -50,7 +54,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/fnb/order', [FnbController::class, 'cashier'])->name('fnb.cashier');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/users', [App\Http\Controllers\AdminUserController::class, 'index'])->name('admin.users');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
 
 });
 

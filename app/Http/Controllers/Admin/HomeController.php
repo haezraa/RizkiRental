@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
@@ -23,7 +24,7 @@ class HomeController extends Controller
                             ->take(5)
                             ->get();
 
-        return view('home', compact(
+        return view('admin.home', compact(
             'pemasukan_hari_ini',
             'unit_sedang_main',
             'total_transaksi',

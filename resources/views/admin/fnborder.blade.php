@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('parts.layout')
 
 @section('judul_halaman', 'Order Makanan & Minuman')
 
@@ -19,7 +19,7 @@
                     </h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @forelse($products->where('category', 'makanan') as $item)
-                            @include('fnb.partials.menu-card', ['item' => $item])
+                            @include('parts.menu-card', ['item' => $item])
                         @empty
                             <p class="text-gray-400 text-sm italic">Tidak ada makanan.</p>
                         @endforelse
@@ -32,7 +32,7 @@
                     </h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @forelse($products->where('category', 'minuman') as $item)
-                            @include('fnb.partials.menu-card', ['item' => $item])
+                            @include('parts.menu-card', ['item' => $item])
                         @empty
                             <p class="text-gray-400 text-sm italic">Tidak ada minuman.</p>
                         @endforelse

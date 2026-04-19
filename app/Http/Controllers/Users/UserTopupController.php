@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ class UserTopupController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('topup', compact('user'));
+        return view('users.topup', compact('user'));
     }
 
     public function store(Request $request)
@@ -21,7 +22,7 @@ class UserTopupController extends Controller
         ]);
 
         $user = Auth::user();
-        $tambahMenit = $request->durasi_jam * 60; 
+        $tambahMenit = $request->durasi_jam * 60;
 
         if ($request->tipe_ps == 'PS3') {
             $user->saldo_ps3 += $tambahMenit;

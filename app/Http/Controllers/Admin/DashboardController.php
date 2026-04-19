@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Console;
@@ -166,7 +167,7 @@ class DashboardController extends Controller
 
         $products = Product::where('stock', '>', 0)->get();
 
-        return view('rental', compact('ps3_units', 'ps4_units', 'ps5_units', 'products'));
+        return view('admin.rental', compact('ps3_units', 'ps4_units', 'ps5_units', 'products'));
     }
 
     public function store(Request $request)

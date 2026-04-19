@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('parts.layout')
 
 @section('judul_halaman', 'Rental Area')
 
@@ -24,7 +24,7 @@
         <h3 class="text-xl font-bold mb-4 border-l-4 border-brand-blue pl-3 text-gray-800">PlayStation 3 Area</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             @forelse($ps3_units as $unit)
-                @include('components.unit-card', ['unit' => $unit])
+                @include('parts.unit-card', ['unit' => $unit])
             @empty
                 <p class="text-gray-500 italic col-span-4">Belum ada unit PS3.</p>
             @endforelse
@@ -35,7 +35,7 @@
         <h3 class="text-xl font-bold mb-4 border-l-4 border-brand-blue pl-3 text-gray-800">PlayStation 4 Area</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             @forelse($ps4_units as $unit)
-                @include('components.unit-card', ['unit' => $unit])
+                @include('parts.unit-card', ['unit' => $unit])
             @empty
                 <p class="text-gray-500 italic col-span-4">Belum ada unit PS4.</p>
             @endforelse
@@ -46,7 +46,7 @@
         <h3 class="text-xl font-bold mb-4 border-l-4 border-brand-blue pl-3 text-gray-800">PlayStation 5 Area</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             @forelse($ps5_units as $unit)
-                @include('components.unit-card', ['unit' => $unit])
+                @include('parts.unit-card', ['unit' => $unit])
             @empty
                 <p class="text-gray-500 italic col-span-4">Belum ada unit PS5.</p>
             @endforelse
