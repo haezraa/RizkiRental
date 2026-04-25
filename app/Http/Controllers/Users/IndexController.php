@@ -12,14 +12,25 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $expired_transactions = Transaction::where('status', 'ongoing')
-            ->where('end_time', '<=', Carbon::now())
+        $expired_transactions = Transaction::whereIn('status', ['ongoing', 'paused'])
+            ->where('end_time', '<=', Carbon::now('Asia/Jakarta'))
             ->get();
 
         foreach ($expired_transactions as $trans) {
             $trans->update(['status' => 'finished']);
             if ($trans->console) {
                 $trans->console->update(['status' => 'ready']);
+            }
+        }
+
+        $stuck_consoles = Console::where('status', 'main')->get();
+        foreach ($stuck_consoles as $console) {
+            $activeTrans = Transaction::where('console_id', $console->id)
+                            ->whereIn('status', ['ongoing', 'paused'])
+                            ->first();
+
+            if (!$activeTrans) {
+                $console->update(['status' => 'ready']);
             }
         }
 
@@ -36,7 +47,7 @@ class IndexController extends Controller
         $user = auth()->user();
 
         $sedangMain = Transaction::where('customer_name', $user->name)
-            ->where('status', 'ongoing')
+            ->whereIn('status', ['ongoing', 'paused'])
             ->first();
 
         if ($sedangMain) {
@@ -70,7 +81,6 @@ class IndexController extends Controller
             return back()->with('error', '❌ Yah telat, TV-nya baru aja dibooking orang lain.');
         }
 
-        // Simpan semua data
         $user->save();
         $console->status = 'main';
         $console->save();
@@ -78,8 +88,8 @@ class IndexController extends Controller
         Transaction::create([
             'console_id' => $console->id,
             'customer_name' => $user->name,
-            'start_time' => Carbon::now(),
-            'end_time' => Carbon::now()->addMinutes($butuhMenit),
+            'start_time' => Carbon::now('Asia/Jakarta'),
+            'end_time' => Carbon::now('Asia/Jakarta')->addMinutes($butuhMenit),
             'duration_minutes' => $butuhMenit,
             'total_price' => 0,
             'status' => 'ongoing'
