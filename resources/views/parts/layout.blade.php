@@ -41,7 +41,7 @@
 
 <body class="bg-slate-50 text-brand-dark font-sans flex h-screen overflow-hidden selection:bg-brand-blue selection:text-white">
 
-    <aside class="w-64 glass-sidebar text-white flex flex-col shadow-2xl relative z-20 flex-shrink-0 transition-all duration-300 rounded-[2rem] m-4 h-[calc(100vh-2rem)] overflow-hidden border border-white/10">
+    <aside class="w-64 glass-sidebar text-white flex flex-col shadow-2xl relative z-20 flex-shrink-0 transition-all duration-300 rounded-[2rem] my-4 ml-4 mr-3 h-[calc(100vh-2rem)] overflow-hidden border border-white/10">
 
         <div class="pt-8 pb-6 px-6 flex flex-col items-center justify-center relative">
             <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
@@ -114,7 +114,7 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-slate-50">
 
-        <div class="pt-4 px-6 pb-2 shrink-0 z-20">
+        <div class="pt-4 pr-4 pl-1 pb-0 shrink-0 z-20">
             <header class="h-16 bg-white/90 backdrop-blur-md flex justify-between items-center px-6 shadow-sm rounded-2xl border border-slate-200">
                 <h2 class="text-xl font-extrabold text-slate-800 tracking-tight">
                     @yield('judul_halaman')
@@ -125,16 +125,17 @@
 
                         <div class="relative" id="modeDropdownWrapper">
                             <button onclick="toggleModeDropdown()" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-brand-blue font-bold py-2 px-4 rounded-xl transition-colors text-sm border border-slate-200 outline-none">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
                                 <span>Mode Admin</span>
                                 <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" id="modeDropdownIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
 
                             <div id="modeDropdownMenu" class="absolute right-0 mt-2 w-36 bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] border border-slate-100 opacity-0 invisible scale-95 origin-top-right transition-all duration-200 z-50">
                                 <div class="p-1.5 flex flex-col gap-0.5">
-                                    <a href="{{ route('home') }}" class="px-3 py-2 text-sm font-bold text-brand-blue bg-blue-50 rounded-lg">
+                                    <a href="{{ route('home') }}" class="px-4 py-2.5 text-sm font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
                                         Mode Admin
                                     </a>
-                                    <a href="{{ route('front') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors">
+                                    <a href="{{ route('front') }}" class="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors">
                                         Mode User
                                     </a>
                                 </div>
@@ -147,7 +148,7 @@
             </header>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-6 scrollbar-hide">
+        <div class="flex-1 overflow-y-auto pr-4 pl-1 pb-6 pt-6 scrollbar-hide">
             @yield('konten')
         </div>
     </main>
