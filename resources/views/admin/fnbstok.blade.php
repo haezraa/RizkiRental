@@ -14,6 +14,51 @@
 
 @section('konten')
 
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#1e448e] flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            </div>
+            <div>
+                <p class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-0.5">Total Menu</p>
+                <h4 class="text-2xl font-black text-slate-800">{{ $products->count() }}</h4>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10z"></path></svg>
+            </div>
+            <div>
+                <p class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-0.5">Makanan</p>
+                <h4 class="text-2xl font-black text-slate-800">{{ $products->where('category', 'makanan')->count() }}</h4>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            </div>
+            <div>
+                <p class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-0.5">Minuman</p>
+                <h4 class="text-2xl font-black text-slate-800">{{ $products->where('category', 'minuman')->count() }}</h4>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow relative overflow-hidden">
+            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0 relative z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="relative z-10">
+                <p class="text-[11px] font-extrabold text-rose-500 uppercase tracking-wider mb-0.5">Stok Menipis</p>
+                <h4 class="text-2xl font-black text-slate-800">{{ $products->where('stock', '<=', 5)->count() }}</h4>
+            </div>
+            @if($products->where('stock', '<=', 5)->count() > 0)
+                <div class="absolute -right-4 -top-4 w-16 h-16 bg-rose-100 rounded-full blur-2xl opacity-50"></div>
+            @endif
+        </div>
+    </div>
+
     <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -299,7 +344,6 @@
                 closeEditCategoryDropdown();
             }
         });
-
 
         function openEditModal(id, name, category, price, stock) {
             document.getElementById('editName').value = name;
