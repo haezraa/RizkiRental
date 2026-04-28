@@ -10,14 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class FnbController extends Controller
 {
-    // Halaman Utama
     public function index()
     {
         $products = Product::all();
         return view('admin.fnbstok', compact('products'));
     }
 
-    // Simpan Menu Baru
     public function store(Request $request)
     {
         $request->validate([
@@ -61,7 +59,6 @@ class FnbController extends Controller
             }
 
             $filename = time() . '_' . $file->getClientOriginalName();
-
             $file->move(storage_path('app/public/products'), $filename);
 
             $data['image'] = 'products/' . $filename;
@@ -72,25 +69,39 @@ class FnbController extends Controller
         return back()->with('success', 'Menu berhasil diupdate!');
     }
 
-    // Hapus Menu
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return back()->with('success', 'Menu dihapus.');
+        try {
+            $product = Product::findOrFail($id);
+
+            if ($product->image && file_exists(storage_path('app/public/' . $product->image))) {
+                unlink(storage_path('app/public/' . $product->image));
+            }
+
+            $product->delete();
+
+            return back()->with('success', 'Mantap! Menu berhasil dihapus.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == "23000") {
+                return back()->with('error', 'Gagal hapus! Menu ini udah nyangkut di riwayat transaksi. Ubah aja stoknya jadi 0 ya bro.');
+            }
+
+            return back()->with('error', 'Gagal menghapus menu: ' . $e->getMessage());
+        }
     }
 
-    // Update Stok
     public function updateStock(Request $request, $id)
     {
         $product = Product::find($id);
         $product->update(['stock' => $request->stock]);
-        return back();
+
+        return back()->with('success', 'Stok berhasil diupdate!');
     }
 
     public function cashier()
     {
         $products = Product::where('stock', '>', 0)->get();
-
         $active_consoles = Console::whereIn('status', ['main', 'paused'])->get();
 
         return view('admin.fnborder', compact('products', 'active_consoles'));

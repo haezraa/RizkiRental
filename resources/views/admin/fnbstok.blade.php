@@ -64,6 +64,7 @@
             <table class="w-full text-left border-collapse">
                 <thead class="bg-slate-50/80 backdrop-blur-sm border-b border-slate-200">
                     <tr>
+                        <th class="px-6 py-5 font-extrabold text-xs text-slate-400 uppercase tracking-wider text-center w-28">Foto</th>
                         <th class="px-6 py-5 font-extrabold text-xs text-slate-400 uppercase tracking-wider">Nama Produk</th>
                         <th class="px-6 py-5 font-extrabold text-xs text-slate-400 uppercase tracking-wider">Kategori</th>
                         <th class="px-6 py-5 font-extrabold text-xs text-slate-400 uppercase tracking-wider">Harga</th>
@@ -74,6 +75,15 @@
                 <tbody class="divide-y divide-slate-100">
                     @forelse($products as $item)
                         <tr class="hover:bg-blue-50/30 transition-colors">
+                            <td class="px-6 py-4">
+                                <div class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center mx-auto">
+                                    @if($item->image)
+                                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <span class="text-3xl">{{ $item->category == 'makanan' ? '🍜' : '🥤' }}</span>
+                                    @endif
+                                </div>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="font-extrabold text-slate-800 tracking-tight">{{ $item->name }}</div>
                             </td>
@@ -135,7 +145,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center">
+                            <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center text-slate-400">
                                     <svg class="w-12 h-12 mb-3 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                                     <p class="font-bold text-sm">Belum ada menu makanan/minuman.</p>
@@ -281,6 +291,42 @@
         </div>
     </div>
 
+    @if(session('success'))
+        <div id="toast-success" class="fixed top-20 right-6 flex items-center w-full max-w-sm p-3 mb-4 bg-white rounded-xl shadow-lg border-l-4 border-emerald-500 z-[100] transition-opacity duration-500">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-emerald-500 bg-emerald-50 rounded-lg">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/></svg>
+            </div>
+            <div class="ms-3 text-xs font-extrabold text-slate-700 leading-tight">{{ session('success') }}</div>
+        </div>
+        <script>
+            setTimeout(() => {
+                let toast = document.getElementById('toast-success');
+                if(toast) {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 4000);
+        </script>
+    @endif
+
+    @if(session('error'))
+        <div id="toast-error" class="fixed top-20 right-6 flex items-center w-full max-w-sm p-3 mb-4 bg-white rounded-xl shadow-lg border-l-4 border-rose-500 z-[100] transition-opacity duration-500">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-rose-500 bg-rose-50 rounded-lg">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/></svg>
+            </div>
+            <div class="ms-3 text-xs font-extrabold text-slate-700 leading-tight">{{ session('error') }}</div>
+        </div>
+        <script>
+            setTimeout(() => {
+                let toast = document.getElementById('toast-error');
+                if(toast) {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 4000);
+        </script>
+    @endif
+
     <script>
         function toggleAddCategoryDropdown() {
             const menu = document.getElementById('addCategoryMenu');
@@ -364,6 +410,12 @@
 
         function closeEditModal() {
             document.getElementById('editProductModal').classList.add('hidden');
+        }
+
+        function openConfirm(pesan, formId) {
+            if (confirm(pesan)) {
+                document.getElementById(formId).submit();
+            }
         }
     </script>
 @endsection
