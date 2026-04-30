@@ -73,7 +73,7 @@
             <div class="bg-gradient-to-r from-[#1e448e] to-[#153166] px-6 py-5 flex justify-between items-center flex-shrink-0 shadow-sm relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-10 -mt-10"></div>
                 <h3 class="text-lg font-extrabold text-white flex items-center gap-2 relative z-10">
-                    <span>🎮</span> <span id="modalTitle">Booking TV</span>
+                    <span></span> <span id="modalTitle">Booking TV</span>
                 </h3>
                 <button type="button" onclick="closeModal()" class="text-white/50 hover:text-white text-2xl leading-none transition relative z-10">&times;</button>
             </div>
@@ -104,7 +104,7 @@
                                             class="w-4 h-4 text-brand-blue bg-white border-slate-300 rounded focus:ring-brand-blue cursor-pointer disabled:opacity-50"
                                             {{ !$isBegadangAllowed ? 'disabled' : '' }}>
                                         <label for="checkBegadang" class="text-[11px] font-extrabold text-brand-blue uppercase cursor-pointer tracking-wider {{ !$isBegadangAllowed ? 'opacity-50' : '' }}">
-                                            Paket Begadang
+                                            Paket Malam
                                         </label>
                                     </div>
                                     @if(!$isBegadangAllowed)
@@ -157,13 +157,13 @@
                             <label class="cursor-pointer relative group">
                                 <input type="radio" name="payment_method" value="cash" class="peer sr-only" checked onchange="toggleQris(false)">
                                 <div class="p-3.5 rounded-xl border-2 border-slate-200 text-slate-500 peer-checked:border-brand-blue peer-checked:bg-blue-50 peer-checked:text-brand-blue font-extrabold text-sm text-center transition-all flex items-center justify-center gap-2 group-hover:bg-slate-50">
-                                    <span>💵</span> Tunai
+                                    <span></span> Tunai
                                 </div>
                             </label>
                             <label class="cursor-pointer relative group">
                                 <input type="radio" name="payment_method" value="qris" class="peer sr-only" onchange="toggleQris(true)">
                                 <div class="p-3.5 rounded-xl border-2 border-slate-200 text-slate-500 peer-checked:border-brand-blue peer-checked:bg-blue-50 peer-checked:text-brand-blue font-extrabold text-sm text-center transition-all flex items-center justify-center gap-2 group-hover:bg-slate-50">
-                                    <span>📱</span> QRIS
+                                    <span></span> QRIS
                                 </div>
                             </label>
                         </div>
@@ -200,7 +200,7 @@
             <div class="bg-gradient-to-r from-[#1e448e] to-[#153166] px-6 py-5 flex justify-between items-center relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-10 -mt-10"></div>
                 <h3 class="text-lg font-extrabold text-white flex items-center gap-2 relative z-10">
-                    <span>📺</span> <span>Tambah Unit Baru</span>
+                    <span></span> <span>Tambah Unit Baru</span>
                 </h3>
                 <button type="button" onclick="closeAddModal()" class="text-white/50 hover:text-white text-2xl leading-none relative z-10">&times;</button>
             </div>

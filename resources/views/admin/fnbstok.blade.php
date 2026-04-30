@@ -80,7 +80,7 @@
                                     @if($item->image)
                                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-full h-full object-cover">
                                     @else
-                                        <span class="text-3xl">{{ $item->category == 'makanan' ? '🍜' : '🥤' }}</span>
+                                        <span class="text-3xl">{{ $item->category == 'makanan' ? '' : '' }}</span>
                                     @endif
                                 </div>
                             </td>
@@ -90,11 +90,11 @@
                             <td class="px-6 py-4">
                                 @if ($item->category == 'makanan')
                                     <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 border border-amber-200/60 px-3 py-1 rounded-lg text-xs font-bold shadow-sm">
-                                        <span>🍜</span> Makanan
+                                         Makanan
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1.5 bg-sky-50 text-sky-600 border border-sky-200/60 px-3 py-1 rounded-lg text-xs font-bold shadow-sm">
-                                        <span>🥤</span> Minuman
+                                         Minuman
                                     </span>
                                 @endif
                             </td>
@@ -164,7 +164,7 @@
             <div class="bg-gradient-to-r from-[#1e448e] to-[#153166] px-6 py-5 flex justify-between items-center relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-10 -mt-10"></div>
                 <h3 class="text-lg font-extrabold text-white flex items-center gap-2 relative z-10">
-                    <span>📦</span> <span>Tambah Menu Baru</span>
+                    <span>Tambah Menu Baru</span>
                 </h3>
                 <button type="button" onclick="document.getElementById('addMenuModal').classList.add('hidden')" class="text-white/50 hover:text-white text-2xl leading-none relative z-10">&times;</button>
             </div>
@@ -183,19 +183,19 @@
 
                     <button type="button" onclick="toggleAddCategoryDropdown()" id="addCategoryBtn"
                         class="w-full flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-brand-blue focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all shadow-sm">
-                        <span id="addCategoryText" class="flex items-center gap-2"><span>🍜</span> Makanan</span>
+                        <span id="addCategoryText" class="flex items-center gap-2"> Makanan</span>
                         <svg class="w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0" id="addCategoryIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
 
                     <div id="addCategoryMenu" class="absolute left-0 right-0 top-[85px] bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] border border-slate-100 opacity-0 invisible scale-95 origin-top transition-all duration-200 z-50">
                         <div class="p-1.5 flex flex-col gap-0.5">
-                            <button type="button" onclick="selectAddCategory('makanan', '🍜 Makanan')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
+                            <button type="button" onclick="selectAddCategory('makanan', 'Makanan')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_5px_rgba(251,191,36,0.5)] group-hover:scale-125 transition-transform"></span>
-                                <span>🍜 Makanan</span>
+                                <span>Makanan</span>
                             </button>
-                            <button type="button" onclick="selectAddCategory('minuman', '🥤 Minuman')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
+                            <button type="button" onclick="selectAddCategory('minuman', 'Minuman')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
                                 <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_5px_rgba(56,189,248,0.5)] group-hover:scale-125 transition-transform"></span>
-                                <span>🥤 Minuman</span>
+                                <span>Minuman</span>
                             </button>
                         </div>
                     </div>
@@ -231,7 +231,7 @@
             <div class="bg-gradient-to-r from-[#1e448e] to-[#153166] px-6 py-5 flex justify-between items-center relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-10 -mt-10"></div>
                 <h3 class="text-lg font-extrabold text-white flex items-center gap-2 relative z-10">
-                    <span>✏️</span> <span>Edit Menu</span>
+                    <span>Edit Menu</span>
                 </h3>
                 <button type="button" onclick="closeEditModal()" class="text-white/50 hover:text-white text-2xl leading-none relative z-10">&times;</button>
             </div>
@@ -256,13 +256,13 @@
 
                     <div id="editCategoryMenu" class="absolute left-0 right-0 top-[85px] bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] border border-slate-100 opacity-0 invisible scale-95 origin-top transition-all duration-200 z-50">
                         <div class="p-1.5 flex flex-col gap-0.5">
-                            <button type="button" onclick="selectEditCategory('makanan', '🍜 Makanan')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
+                            <button type="button" onclick="selectEditCategory('makanan', 'Makanan')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_5px_rgba(251,191,36,0.5)] group-hover:scale-125 transition-transform"></span>
-                                <span>🍜 Makanan</span>
+                                <span>Makanan</span>
                             </button>
-                            <button type="button" onclick="selectEditCategory('minuman', '🥤 Minuman')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
+                            <button type="button" onclick="selectEditCategory('minuman', 'Minuman')" class="w-full text-left px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors flex items-center gap-2 group">
                                 <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_5px_rgba(56,189,248,0.5)] group-hover:scale-125 transition-transform"></span>
-                                <span>🥤 Minuman</span>
+                                <span>Minuman</span>
                             </button>
                         </div>
                     </div>

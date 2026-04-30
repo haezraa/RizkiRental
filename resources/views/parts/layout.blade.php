@@ -125,7 +125,6 @@
 
                         <div class="relative" id="modeDropdownWrapper">
                             <button onclick="toggleModeDropdown()" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-brand-blue font-bold py-2 px-4 rounded-xl transition-colors text-sm border border-slate-200 outline-none">
-                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
                                 <span>Mode Admin</span>
                                 <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" id="modeDropdownIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>

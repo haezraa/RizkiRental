@@ -23,7 +23,7 @@
                     <div class="flex items-center gap-3 mb-5 border-b border-slate-200/60 pb-3">
                         <div class="w-2 h-6 bg-brand-blue rounded-full"></div>
                         <h3 class="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2">
-                            <span>🍜</span> Menu Makanan
+                             Menu Makanan
                         </h3>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -41,7 +41,7 @@
                     <div class="flex items-center gap-3 mb-5 border-b border-slate-200/60 pb-3">
                         <div class="w-2 h-6 bg-brand-blue rounded-full"></div>
                         <h3 class="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2">
-                            <span>🥤</span> Menu Minuman
+                             Menu Minuman
                         </h3>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -63,7 +63,7 @@
             <div class="bg-gradient-to-r from-[#1e448e] to-[#153166] p-5 relative overflow-hidden flex-shrink-0">
                 <div class="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-10 -mt-10"></div>
                 <h3 class="font-extrabold text-lg text-white flex items-center gap-2 relative z-10 tracking-wide">
-                    🛒 Pesanan Baru
+                    Pesanan Baru
                 </h3>
             </div>
 
